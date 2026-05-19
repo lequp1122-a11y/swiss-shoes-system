@@ -8,8 +8,4 @@ export default defineConfig({
     vue(),
     tailwindcss(),
   ],
-
-  build: {
-    cssMinify: 'esbuild'
-  }
 })
