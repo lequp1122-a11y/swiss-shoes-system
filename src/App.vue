@@ -1167,10 +1167,10 @@ body { font-family: "Pretendard", sans-serif; }
 .dark .border-gray-100, .dark .border-gray-200, .dark .border-gray-300 { border-color: #374151 !important; }
 .dark input, .dark select { background-color: #374151 !important; color: #f9fafb !important; border-color: #4b5563 !important; }
 .dark input::placeholder { color: #9ca3af !important; }
-.dark .bg-\\[\\#C5E1FF\\] { background-color: #1e3a8a !important; color: #bfdbfe !important; border-color: #1e3a8a !important; }
-.dark .bg-\\[\\#FABCBC\\] { background-color: #7f1d1d !important; color: #fecaca !important; border-color: #7f1d1d !important; }
-.dark .bg-\\[\\#FFF2CC\\] { background-color: #713f12 !important; color: #fef08a !important; border-color: #713f12 !important; }
-.dark .bg-\\[\\#E9D5FF\\] { background-color: #6b21a8 !important; color: #f3e8ff !important; border-color: #6b21a8 !important; }
+.dark .bg-\[\#C5E1FF\] { background-color: #1e3a8a !important; color: #bfdbfe !important; border-color: #1e3a8a !important; }
+.dark .bg-\[\#FABCBC\] { background-color: #7f1d1d !important; color: #fecaca !important; border-color: #7f1d1d !important; }
+.dark .bg-\[\#FFF2CC\] { background-color: #713f12 !important; color: #fef08a !important; border-color: #713f12 !important; }
+.dark .bg-\[\#E9D5FF\] { background-color: #6b21a8 !important; color: #f3e8ff !important; border-color: #6b21a8 !important; }
 .list-enter-active, .list-leave-active { transition: all 0.3s; }
 .list-enter-from, .list-leave-to { opacity: 0; transform: translateY(10px); }
 
