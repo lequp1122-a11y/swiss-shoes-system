@@ -43,24 +43,37 @@
       <div v-if="currentTab === 'log'" class="space-y-8">
         <div class="bg-white rounded-3xl shadow-md border-2 border-gray-100 relative overflow-hidden transition-colors">
           <div class="absolute top-0 left-0 w-full h-2 transition-colors duration-300" :class="{'bg-[#FABCBC]': logForm.type==='출고', 'bg-[#C5E1FF]': logForm.type==='입고', 'bg-[#FFF2CC]': logForm.type==='양도'}"></div>
-          <div class="p-6 sm:p-8">
-            <h2 class="text-xl font-black text-gray-800 flex items-center gap-2 mb-6">✏️ 입출고 등록
-              <button @click="resetLogForm" class="ml-2 p-1.5 text-gray-400 hover:text-indigo-600 bg-gray-50 hover:bg-indigo-50 rounded-full transition-all border border-gray-200">🔄</button>
-            </h2>
+<div class="p-6 sm:p-8">
             <div class="flex flex-col lg:flex-row gap-6">
               <div class="flex-1 space-y-5">
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
-                <div class="space-y-1.5">
-                  <label class="block text-xs font-black text-gray-400">구분</label>
-                  <div class="flex gap-2 h-[52px]">
-                    <button @click="logForm.type = '출고'" :class="logForm.type === '출고' ? 'bg-[#FABCBC] text-gray-900 shadow-md' : 'bg-gray-50 text-gray-400 hover:bg-gray-100'" class="flex-1 rounded-xl font-bold transition-all border border-gray-100">출고</button>
-                    <button @click="logForm.type = '입고'" :class="logForm.type === '입고' ? 'bg-[#C5E1FF] text-gray-900 shadow-md' : 'bg-gray-50 text-gray-400 hover:bg-gray-100'" class="flex-1 rounded-xl font-bold transition-all border border-gray-100">입고</button>
-                    <button @click="logForm.type = '양도'" :class="logForm.type === '양도' ? 'bg-[#FFF2CC] text-gray-900 shadow-md' : 'bg-gray-50 text-gray-400 hover:bg-gray-100'" class="flex-1 rounded-xl font-bold transition-all border border-gray-100">양도</button>
+                
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-5 mb-1">
+                  <div class="flex justify-between items-center border-b-2 border-gray-50 pb-3">
+                    <h2 class="text-xl font-black text-gray-800 flex items-center gap-2">
+                      ✏️ 입출고 등록
+                      <button @click="resetLogForm" class="ml-2 p-1.5 text-gray-400 hover:text-indigo-600 bg-gray-50 hover:bg-indigo-50 rounded-full transition-all border border-gray-200">🔄</button>
+                    </h2>
+                    
+                    <div class="relative w-[140px] bg-white rounded-xl">
+                      <input v-model="logForm.date" type="date" class="w-full px-3 py-2 border-2 border-gray-100 rounded-xl font-black bg-transparent text-sm outline-none focus:border-indigo-500 text-center shadow-sm relative z-10 cursor-pointer" style="color: transparent;">
+                      <div class="absolute inset-0 flex items-center justify-center pointer-events-none z-0 pr-4">
+                        <span class="font-black text-sm text-gray-800">{{ formattedFormDate }}</span>
+                      </div>
+                    </div>
                   </div>
                 </div>
-                  <div class="space-y-1.5"><label class="block text-xs font-black text-gray-400">날짜</label>
-                    <input v-model="logForm.date" type="date" class="w-full px-4 py-3 border-2 border-gray-100 rounded-2xl font-bold bg-white"></div>
-                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                  <div class="space-y-1.5">
+                    <label class="block text-xs font-black text-gray-400">구분</label>
+                    <div class="flex gap-2 h-[52px]">
+                      <button @click="logForm.type = '출고'" :class="logForm.type === '출고' ? 'bg-[#FABCBC] text-gray-900 shadow-md' : 'bg-gray-50 text-gray-400 hover:bg-gray-100'" class="flex-1 rounded-xl font-bold transition-all border border-gray-100">출고</button>
+                      <button @click="logForm.type = '입고'" :class="logForm.type === '입고' ? 'bg-[#C5E1FF] text-gray-900 shadow-md' : 'bg-gray-50 text-gray-400 hover:bg-gray-100'" class="flex-1 rounded-xl font-bold transition-all border border-gray-100">입고</button>
+                      <button @click="logForm.type = '양도'" :class="logForm.type === '양도' ? 'bg-[#FFF2CC] text-gray-900 shadow-md' : 'bg-gray-50 text-gray-400 hover:bg-gray-100'" class="flex-1 rounded-xl font-bold transition-all border border-gray-100">양도</button>
+                    </div>
+                  </div>
+                  </div>
+                
                 <div class="grid grid-cols-1 sm:grid-cols-3 gap-5">
                   <div class="space-y-1.5"><label class="block text-xs font-black text-gray-400">브랜드</label>
                     <div class="flex gap-2 h-[52px]">
@@ -72,7 +85,8 @@
                       <option value="" disabled>모델 선택</option><option v-for="model in availableModelsForForm" :key="model" :value="model">{{ model }}</option>
                     </select></div>
                 </div>
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                
+                <div class="grid grid-cols-2 gap-5">
                   <div class="space-y-1.5"><label class="block text-xs font-black text-gray-400">사이즈</label>
                     <select v-model="logForm.size" class="w-full px-4 py-3 border-2 border-indigo-100 rounded-2xl text-indigo-700 font-black bg-indigo-50/30">
                       <option v-for="size in availableSizes" :key="size" :value="size">{{ size }}</option>
@@ -82,6 +96,7 @@
                       <span class="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 font-bold text-sm">족</span></div></div>
                 </div>
               </div>
+              
               <button @click="submitLog" class="lg:w-48 py-6 rounded-3xl transition-all font-black text-4xl" :class="{'bg-[#FABCBC]': logForm.type === '출고', 'bg-[#C5E1FF]': logForm.type === '입고', 'bg-[#FFF2CC]': logForm.type === '양도'}">
                 {{ logForm.type }} 등록
               </button>
@@ -461,6 +476,19 @@ const availableSizes = [220, 225, 230, 235, 240, 245, 250, 255, 260, 265, 270, 2
 const weekDays = ['일', '월', '화', '수', '목', '금', '토'] 
 
 const createEmptySizes = () => { const s = {}; availableSizes.forEach(sz => s[sz] = 0); return s; }
+
+// ------------------------------------------
+// 🔥 새로 추가할 날짜 포맷팅 로직
+// ------------------------------------------
+const formattedFormDate = computed(() => {
+  if (!logForm.value.date) return '';
+  const d = new Date(logForm.value.date);
+  const yy = String(d.getFullYear()).slice(-2);
+  const mm = String(d.getMonth() + 1).padStart(2, '0');
+  const dd = String(d.getDate()).padStart(2, '0');
+  const day = weekDays[d.getDay()];
+  return `${yy}-${mm}-${dd}(${day})`;
+});
 
 // ==========================================
 // 👟 오리지널 전체 신발 리스트
