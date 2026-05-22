@@ -196,119 +196,180 @@
         </div>
 
 <div v-if="currentTab === 'status'" class="space-y-4">
-        
-        <div class="flex flex-col md:flex-row gap-4 items-stretch md:items-end bg-white p-4 rounded-2xl shadow-sm sticky top-[80px] z-20 border-2 border-gray-100 transition-colors">
-          
-          <div class="w-full md:flex-1 space-y-1.5 relative">
-            <label class="text-xs font-black text-gray-400">모델 검색</label>
-            <input v-model="searchQuery" type="text" placeholder="검색어를 입력하세요" class="w-full px-4 py-2.5 rounded-xl border border-gray-200 bg-gray-50 font-bold pr-10 outline-none focus:ring-2 focus:ring-indigo-500 transition-all">
-            <button v-if="searchQuery" @click="searchQuery = ''" class="absolute right-3 top-[34px] w-5 h-5 flex items-center justify-center bg-gray-300 hover:bg-gray-400 text-white rounded-full text-xs font-bold transition-colors">X</button>
-          </div>
-          
-          <div class="w-full md:w-auto h-[46px]">
-            <button @click="showModal = true" class="w-full h-full bg-indigo-600 text-white px-5 rounded-xl font-black shadow-md hover:bg-indigo-700 transition">+ 새 모델 추가</button>
-          </div>
-        </div>
+  
+  <div class="flex flex-col md:flex-row gap-4 items-stretch md:items-end bg-white p-4 rounded-2xl shadow-sm sticky top-[80px] z-20 border-2 border-gray-100 transition-colors">
+    <div class="w-full md:flex-1 space-y-1.5 relative">
+      <label class="text-xs font-black text-gray-400">모델 검색</label>
+      <input v-model="searchQuery" type="text" placeholder="검색어를 입력하세요" class="w-full px-4 py-2.5 rounded-xl border border-gray-200 bg-gray-50 font-bold pr-10 outline-none focus:ring-2 focus:ring-indigo-500 transition-all">
+      <button v-if="searchQuery" @click="searchQuery = ''" class="absolute right-3 top-[34px] w-5 h-5 flex items-center justify-center bg-gray-300 hover:bg-gray-400 text-white rounded-full text-xs font-bold transition-colors">X</button>
+    </div>
+    
+    <div class="w-full md:w-auto h-[46px]">
+      <button @click="showModal = true" class="w-full h-full bg-indigo-600 text-white px-5 rounded-xl font-black shadow-md hover:bg-indigo-700 transition">+ 새 모델 추가</button>
+    </div>
+  </div>
 
-        <div class="pt-4">
-          <div class="flex justify-between items-center mb-3">
-            
-            <div class="flex gap-2">
-              <button @click="selectedBrand = 'All'" :class="selectedBrand === 'All' ? 'bg-indigo-600 text-white shadow-md border-indigo-600' : 'bg-white text-gray-600 border-gray-200 hover:bg-gray-50'" class="px-4 py-2 rounded-xl font-bold transition-all text-[13px] border">전체</button>
-              <button @click="selectedBrand = 'Kybun'" :class="selectedBrand === 'Kybun' ? 'bg-blue-600 text-white shadow-md border-blue-600' : 'bg-white text-gray-600 border-gray-200 hover:bg-gray-50'" class="px-4 py-2 rounded-xl font-bold transition-all text-[13px] border">기분</button>
-              <button @click="selectedBrand = 'Joya'" :class="selectedBrand === 'Joya' ? 'bg-orange-600 text-white shadow-md border-orange-600' : 'bg-white text-gray-600 border-gray-200 hover:bg-gray-50'" class="px-4 py-2 rounded-xl font-bold transition-all text-[13px] border">조야</button>
-            </div>
-
-            <button @click="toggleB2BMode" class="flex items-center gap-1.5 px-4 py-2 rounded-xl font-black transition-all shadow-sm border-2"
-                    :class="isB2BMode ? 'bg-indigo-600 text-white border-indigo-700' : 'bg-white text-indigo-600 border-indigo-200 hover:bg-indigo-50'">
-              <span v-if="isLoadingB2B" class="animate-spin text-sm">⏳</span>
-              <span v-else class="text-sm">{{ isB2BMode ? '✅' : '🌐' }}</span>
-              <span class="text-[13px]">{{ isB2BMode ? (isLoadingB2B ? 'B2B 갱신 중...' : 'B2B 켜짐') : 'B2B 재고' }}</span>
-            </button>
-          </div>
-
-          <div class="overflow-auto max-h-[70vh] bg-white rounded-2xl shadow-sm border-2 border-gray-200 transition-colors relative">
-            <table class="w-full whitespace-nowrap text-sm border-collapse select-none">
-              <thead class="sticky top-0 z-30 shadow-md">
-                <tr class="bg-[#5c7f59] text-white">
-                  <th class="px-3 py-3 font-bold border-r border-[#6b8e68] text-center w-16 bg-[#5c7f59]">브랜드</th>
-                  
-                  <th class="px-4 py-3 font-bold border-r border-[#6b8e68] text-center min-w-[200px] bg-[#5c7f59]">
-                    <div class="flex items-center justify-center gap-2">
-                      <span>상품명</span>
-                      <button @click="toggleEditMode" 
-                              class="flex justify-center items-center w-7 h-7 rounded-lg transition-all shadow-sm active:scale-95"
-                              :class="isEditMode ? 'bg-red-500 text-white hover:bg-red-600 border border-red-600' : 'bg-white/20 text-white hover:bg-white/30 border border-transparent'"
-                              :title="isEditMode ? '수정 완료 (저장)' : '재고 수정'">
-                        <span class="text-[13px]">{{ isEditMode ? '💾' : '✏️' }}</span>
-                      </button>
-                    </div>
-                  </th>
-                  
-                  <th v-for="size in availableSizes" :key="size" 
-                      @click="toggleSizeSort(size)"
-                      class="px-1 py-3 font-bold border-r border-[#6b8e68] w-12 text-center transition-all cursor-pointer hover:bg-[#4a6b47]"
-                      :class="sortBySize === size ? 'bg-indigo-600 text-white shadow-inner scale-110 z-10 relative' : 'bg-[#5c7f59] text-white'">
-                    {{ size }}
-                  </th>
-                  <th class="px-3 py-3 font-bold text-center w-16 bg-[#5c7f59]">총합</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr v-if="sortedAndFilteredInventory.length === 0">
-                  <td :colspan="availableSizes.length + 3" class="py-12 text-center text-gray-400 font-bold bg-gray-50/50">검색 결과가 없습니다.</td>
-                </tr>
-                <tr v-for="(shoe, index) in sortedAndFilteredInventory" :key="shoe.id" 
-                    class="border-b border-gray-200 transition-colors" 
-                    :class="index % 2 === 0 ? 'bg-white' : 'bg-gray-50/30'">
-                  <td class="px-3 py-2 border-r border-dotted border-gray-300 text-center align-middle">
-                    <span class="text-[11px] font-black" :class="shoe.brand === 'Kybun' ? 'text-blue-700' : 'text-orange-700'">{{ shoe.brand }}</span>
-                  </td>
-                  <td class="px-4 py-2 border-r border-dotted border-gray-300 font-bold text-gray-800 align-middle">
-                    <div class="flex justify-between items-center group">
-                      <span>{{ shoe.modelName }}</span>
-                      <button @click="deleteModel(shoe)" class="opacity-0 group-hover:opacity-100 text-red-400 hover:text-red-600 transition-opacity" title="이 모델을 목록에서 완전히 숨깁니다.">🗑️</button>
-                    </div>
-                  </td>
-                  
-                  <td v-for="(size, sizeIndex) in availableSizes" :key="size" 
-                      class="px-1 py-1 border-r border-dotted border-gray-300 text-center align-middle transition-colors relative"
-                      :class="{
-                        'bg-indigo-100/80': isEditMode && isDraftChanged(shoe, size),
-                        'bg-indigo-50/50': sortBySize === size && !(isEditMode && isDraftChanged(shoe, size))
-                      }">
-                    
-                    <input v-if="isEditMode"
-                           v-model="shoe.draftSizes[size]"
-                           @paste="handlePaste($event, index, sizeIndex)"
-                           type="text"
-                           class="w-full h-8 text-center font-black bg-transparent border border-transparent focus:border-indigo-400 focus:ring-2 focus:ring-indigo-100 rounded outline-none transition-colors"
-                           :class="getInputClass(shoe, size)" />
-                    
-                    <div v-else class="h-8 flex flex-col justify-center items-center">
-                      <div class="font-black text-[13px]" 
-                           :class="{
-                             'text-black dark:text-white': shoe.sizes[size] > 0,
-                             'text-red-600': shoe.sizes[size] < 0,
-                             'text-[#5c7f59]': shoe.sizes[size] === 0 && shoe.history?.[size],
-                             'text-transparent': shoe.sizes[size] === 0 && !shoe.history?.[size]
-                           }">
-                        {{ shoe.sizes[size] !== 0 || shoe.history?.[size] ? shoe.sizes[size] : '0' }}
-                      </div>
-                      <div v-if="isB2BMode && shoe.hqStockData" class="mt-0.5 text-[10px] font-black tracking-tighter leading-none" :class="getHQStockTextColor(shoe.hqStockData[size])">
-                        {{ shoe.hqStockData[size] !== undefined ? shoe.hqStockData[size] : '' }}
-                      </div>
-                    </div>
-                  </td>
-                  <td class="px-3 py-2 text-center font-black text-black dark:text-white bg-gray-100/50 align-middle">
-                    {{ getRowTotalStock(shoe) }}
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
+  <div class="pt-4">
+    
+    <div class="flex flex-wrap justify-between items-center mb-3 gap-3">
+      <div class="flex gap-2">
+        <button @click="selectedBrand = 'All'" :class="selectedBrand === 'All' ? 'bg-indigo-600 text-white shadow-md border-indigo-600' : 'bg-white text-gray-600 border-gray-200 hover:bg-gray-50'" class="px-4 py-2 rounded-xl font-bold transition-all text-[13px] border">전체</button>
+        <button @click="selectedBrand = 'Kybun'" :class="selectedBrand === 'Kybun' ? 'bg-blue-600 text-white shadow-md border-blue-600' : 'bg-white text-gray-600 border-gray-200 hover:bg-gray-50'" class="px-4 py-2 rounded-xl font-bold transition-all text-[13px] border">기분</button>
+        <button @click="selectedBrand = 'Joya'" :class="selectedBrand === 'Joya' ? 'bg-orange-600 text-white shadow-md border-orange-600' : 'bg-white text-gray-600 border-gray-200 hover:bg-gray-50'" class="px-4 py-2 rounded-xl font-bold transition-all text-[13px] border">조야</button>
       </div>
+
+      <div class="flex gap-2 items-center">
+        <button @click="toggleEditMode" 
+                class="flex items-center gap-1.5 px-3 sm:px-4 py-2 rounded-xl font-black transition-all shadow-sm border-2"
+                :class="isEditMode ? 'bg-red-500 text-white border-red-600 hover:bg-red-600' : 'bg-white text-gray-600 border-gray-200 hover:bg-gray-50'">
+          <span class="text-sm">{{ isEditMode ? '💾' : '✏️' }}</span>
+          <span class="text-[13px]">{{ isEditMode ? '저장' : '재고수정' }}</span>
+        </button>
+
+        <button @click="toggleB2BMode" class="flex items-center gap-1.5 px-3 sm:px-4 py-2 rounded-xl font-black transition-all shadow-sm border-2"
+                :class="isB2BMode ? 'bg-indigo-600 text-white border-indigo-700' : 'bg-white text-indigo-600 border-indigo-200 hover:bg-indigo-50'">
+          <span v-if="isLoadingB2B" class="animate-spin text-sm">⏳</span>
+          <span v-else class="text-sm">{{ isB2BMode ? '✅' : '🌐' }}</span>
+          <span class="text-[13px] hidden sm:inline">{{ isB2BMode ? (isLoadingB2B ? 'B2B 갱신 중...' : 'B2B 켜짐') : 'B2B 재고' }}</span>
+          <span class="text-[13px] sm:hidden">{{ isB2BMode ? 'B2B' : 'B2B' }}</span>
+        </button>
+      </div>
+    </div>
+
+    <div class="hidden lg:block overflow-auto max-h-[70vh] bg-white rounded-2xl shadow-sm border-2 border-gray-200 transition-colors relative">
+      <table class="w-full whitespace-nowrap text-sm border-collapse select-none">
+        <thead class="sticky top-0 z-30 shadow-md">
+          <tr class="bg-[#5c7f59] text-white">
+            <th class="px-3 py-3 font-bold border-r border-[#6b8e68] text-center w-16 bg-[#5c7f59]">브랜드</th>
+            <th class="px-4 py-3 font-bold border-r border-[#6b8e68] text-center min-w-[200px] bg-[#5c7f59]">상품명</th>
+            <th v-for="size in availableSizes" :key="size" 
+                @click="toggleSizeSort(size)"
+                class="px-1 py-3 font-bold border-r border-[#6b8e68] w-12 text-center transition-all cursor-pointer hover:bg-[#4a6b47]"
+                :class="sortBySize === size ? 'bg-indigo-600 text-white shadow-inner scale-110 z-10 relative' : 'bg-[#5c7f59] text-white'">
+              {{ size }}
+            </th>
+            <th class="px-3 py-3 font-bold text-center w-16 bg-[#5c7f59]">총합</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-if="sortedAndFilteredInventory.length === 0">
+            <td :colspan="availableSizes.length + 3" class="py-12 text-center text-gray-400 font-bold bg-gray-50/50">검색 결과가 없습니다.</td>
+          </tr>
+          <tr v-for="(shoe, index) in sortedAndFilteredInventory" :key="shoe.id" 
+              class="border-b border-gray-200 transition-colors" 
+              :class="index % 2 === 0 ? 'bg-white' : 'bg-gray-50/30'">
+            <td class="px-3 py-2 border-r border-dotted border-gray-300 text-center align-middle">
+              <span class="text-[11px] font-black" :class="shoe.brand === 'Kybun' ? 'text-blue-700' : 'text-orange-700'">{{ shoe.brand }}</span>
+            </td>
+            <td class="px-4 py-2 border-r border-dotted border-gray-300 font-bold text-gray-800 align-middle">
+              <div class="flex justify-between items-center group">
+                <span>{{ shoe.modelName }}</span>
+                <button @click="deleteModel(shoe)" class="opacity-0 group-hover:opacity-100 text-red-400 hover:text-red-600 transition-opacity" title="이 모델을 목록에서 완전히 숨깁니다.">🗑️</button>
+              </div>
+            </td>
+            
+            <td v-for="(size, sizeIndex) in availableSizes" :key="size" 
+                class="px-1 py-1 border-r border-dotted border-gray-300 text-center align-middle transition-colors relative"
+                :class="{'bg-indigo-100/80': isEditMode && isDraftChanged(shoe, size), 'bg-indigo-50/50': sortBySize === size && !(isEditMode && isDraftChanged(shoe, size))}">
+              
+              <input v-if="isEditMode"
+                     v-model="shoe.draftSizes[size]"
+                     @paste="handlePaste($event, index, sizeIndex)"
+                     type="text"
+                     class="w-full h-8 text-center font-black bg-transparent border border-transparent focus:border-indigo-400 focus:ring-2 focus:ring-indigo-100 rounded outline-none transition-colors"
+                     :class="getInputClass(shoe, size)" />
+              
+              <div v-else class="h-8 flex flex-col justify-center items-center">
+                <div class="font-black text-[13px]" 
+                     :class="{'text-black dark:text-white': shoe.sizes[size] > 0, 'text-red-600': shoe.sizes[size] < 0, 'text-[#5c7f59]': shoe.sizes[size] === 0 && shoe.history?.[size], 'text-transparent': shoe.sizes[size] === 0 && !shoe.history?.[size]}">
+                  {{ shoe.sizes[size] !== 0 || shoe.history?.[size] ? shoe.sizes[size] : '0' }}
+                </div>
+                <div v-if="isB2BMode && shoe.hqStockData" class="mt-0.5 text-[10px] font-black tracking-tighter leading-none" :class="getHQStockTextColor(shoe.hqStockData[size])">
+                  {{ shoe.hqStockData[size] !== undefined ? shoe.hqStockData[size] : '' }}
+                </div>
+              </div>
+            </td>
+            <td class="px-3 py-2 text-center font-black text-black dark:text-white bg-gray-100/50 align-middle">
+              {{ getRowTotalStock(shoe) }}
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="lg:hidden space-y-3 pb-8">
+      <div v-if="sortedAndFilteredInventory.length === 0" class="py-10 text-center text-gray-400 font-bold bg-white rounded-2xl border-2 border-gray-100">
+        검색 결과가 없습니다.
+      </div>
+      
+      <div v-for="(shoe, index) in sortedAndFilteredInventory" :key="`mobile-${shoe.id}`" 
+           class="bg-white p-4 rounded-2xl shadow-sm border-2 border-gray-100 relative transition-colors">
+        
+        <div class="flex justify-between items-start mb-4 gap-2">
+          <div class="flex-1">
+            <div class="flex items-center gap-2 mb-1.5">
+              <span class="text-[10px] font-black px-2 py-0.5 rounded-md" 
+                    :class="shoe.brand === 'Kybun' ? 'bg-blue-50 text-blue-700' : 'bg-orange-50 text-orange-700'">
+                {{ shoe.brand }}
+              </span>
+              <button @click="deleteModel(shoe)" class="text-red-400 hover:text-red-600 text-[11px] bg-red-50 px-1.5 py-0.5 rounded" title="목록에서 숨기기">삭제</button>
+            </div>
+            <h4 class="font-bold text-gray-800 text-base leading-tight">{{ shoe.modelName }}</h4>
+          </div>
+          
+          <div class="bg-gray-50 px-3 py-1.5 rounded-xl text-center border border-gray-200 shrink-0">
+            <div class="text-[10px] text-gray-400 font-bold mb-0.5">총합</div>
+            <div class="font-black text-indigo-600 text-sm">{{ getRowTotalStock(shoe) }}</div>
+          </div>
+        </div>
+
+        <div class="flex flex-wrap gap-1.5">
+          <template v-for="(size, sizeIndex) in availableSizes" :key="`mob-size-${size}`">
+            <div v-show="isEditMode || shoe.sizes[size] !== 0 || shoe.history?.[size] || (isB2BMode && shoe.hqStockData?.[size])" 
+                 class="flex flex-col border rounded-lg overflow-hidden shrink-0 min-w-[3.2rem]"
+                 :class="isEditMode && isDraftChanged(shoe, size) ? 'border-indigo-400 ring-1 ring-indigo-400' : 'border-gray-200'">
+              
+              <div class="bg-gray-100 text-[10px] font-black text-center py-0.5 text-gray-500 border-b border-gray-200"
+                   :class="{ 'bg-indigo-600 text-white border-indigo-600': sortBySize === size }">
+                {{ size }}
+              </div>
+              
+              <div class="p-1 flex flex-col items-center justify-center bg-white h-7"
+                   :class="{'bg-indigo-50': isEditMode && isDraftChanged(shoe, size)}">
+                
+                <input v-if="isEditMode"
+                       v-model="shoe.draftSizes[size]"
+                       type="text"
+                       class="w-full text-center font-black bg-transparent outline-none text-[13px]"
+                       :class="getInputClass(shoe, size)" />
+                
+                <div v-else class="flex flex-col justify-center items-center w-full">
+                  <div class="text-[13px] font-black"
+                       :class="{'text-black dark:text-white': shoe.sizes[size] > 0, 'text-red-600': shoe.sizes[size] < 0, 'text-[#5c7f59]': shoe.sizes[size] === 0 && shoe.history?.[size], 'text-gray-300': shoe.sizes[size] === 0 && !shoe.history?.[size]}">
+                    {{ shoe.sizes[size] !== 0 || shoe.history?.[size] ? shoe.sizes[size] : (isB2BMode && shoe.hqStockData?.[size] ? '-' : '0') }}
+                  </div>
+                </div>
+              </div>
+              
+              <div v-if="isB2BMode && shoe.hqStockData && shoe.hqStockData[size] !== undefined" 
+                   class="bg-gray-50 border-t border-gray-100 text-[10px] font-black text-center py-0.5" 
+                   :class="getHQStockTextColor(shoe.hqStockData[size])">
+                {{ shoe.hqStockData[size] }}
+              </div>
+            </div>
+          </template>
+        </div>
+        
+        <div v-if="!isEditMode && availableSizes.every(size => shoe.sizes[size] === 0 && !shoe.history?.[size] && !(isB2BMode && shoe.hqStockData?.[size]))" 
+             class="text-[11px] font-bold text-gray-400 mt-2 bg-gray-50 py-2 px-3 rounded-lg text-center border border-gray-100">
+          현재 보유중인 재고가 없습니다.
+        </div>
+
+      </div>
+    </div>
+    
+  </div>
+</div>
 
 <div v-if="currentTab === 'sales'" class="space-y-8">
         <div class="flex justify-between items-center bg-white p-6 rounded-3xl border-2 border-gray-100 shadow-sm transition-colors">
