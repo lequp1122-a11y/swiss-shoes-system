@@ -40,141 +40,190 @@
 
     <main class="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 py-8">
       
-      <div v-if="currentTab === 'log'" class="space-y-8">
-        <div class="bg-white rounded-3xl shadow-md border-2 border-gray-100 relative overflow-hidden transition-colors">
-          <div class="absolute top-0 left-0 w-full h-2 transition-colors duration-300" :class="{'bg-[#FABCBC]': logForm.type==='출고', 'bg-[#C5E1FF]': logForm.type==='입고', 'bg-[#FFF2CC]': logForm.type==='양도'}"></div>
-<div class="p-6 sm:p-8">
-            <div class="flex flex-col lg:flex-row gap-6">
-              <div class="flex-1 space-y-5">
-                
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-5 mb-1">
-                  <div class="flex justify-between items-center border-b-2 border-gray-50 pb-3">
+<div v-if="currentTab === 'log'" class="space-y-8 max-w-6xl mx-auto w-full">
+          
+          <div class="bg-white rounded-3xl shadow-md border-2 border-gray-100 relative overflow-hidden transition-colors">
+            <div class="absolute top-0 left-0 w-full h-2 transition-colors duration-300" :class="{'bg-[#FABCBC]': logForm.type==='출고', 'bg-[#C5E1FF]': logForm.type==='입고', 'bg-[#FFF2CC]': logForm.type==='양도'}"></div>
+            <div class="p-5 sm:p-7">
+              
+              <div class="flex flex-col lg:flex-row gap-4 lg:gap-3 items-stretch">
+                <div class="flex-[3] space-y-4">
+                  
+                  <div class="flex items-center gap-3 border-b-2 border-gray-50 pb-2 mb-1">
                     <h2 class="text-xl font-black text-gray-800 flex items-center gap-2">
-                      ✏️ 입출고 등록
-                      <button @click="resetLogForm" class="ml-2 p-1.5 text-gray-400 hover:text-indigo-600 bg-gray-50 hover:bg-indigo-50 rounded-full transition-all border border-gray-200">🔄</button>
+                      ✏️ 입출고
+                      <button @click="resetLogForm" class="action-btn ml-1 p-1.5 text-gray-400 hover:text-indigo-600 bg-gray-50 hover:bg-indigo-50 rounded-full transition-all border border-gray-200">🔄</button>
                     </h2>
-                    
-                    <div class="relative w-[140px] bg-white rounded-xl">
-                      <input v-model="logForm.date" type="date" class="w-full px-3 py-2 border-2 border-gray-100 rounded-xl font-black bg-transparent text-sm outline-none focus:border-indigo-500 text-center shadow-sm relative z-10 cursor-pointer" style="color: transparent;">
+                    <div class="relative w-[130px] bg-white rounded-xl">
+                      <input v-model="logForm.date" type="date" class="w-full px-2 py-1.5 border-2 border-gray-100 rounded-xl font-black bg-transparent text-[13px] outline-none focus:border-indigo-500 text-center shadow-sm relative z-10 cursor-pointer" style="color: transparent;">
                       <div class="absolute inset-0 flex items-center justify-center pointer-events-none z-0 pr-4">
-                        <span class="font-black text-sm text-gray-800">{{ formattedFormDate }}</span>
+                        <span class="font-black text-[13px] text-gray-800">{{ formattedFormDate }}</span>
                       </div>
                     </div>
                   </div>
-                </div>
 
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
-                  <div class="space-y-1.5">
-                    <label class="block text-xs font-black text-gray-400">구분</label>
-                    <div class="flex gap-2 h-[52px]">
-                      <button @click="logForm.type = '출고'" :class="logForm.type === '출고' ? 'bg-[#FABCBC] text-gray-900 shadow-md' : 'bg-gray-50 text-gray-400 hover:bg-gray-100'" class="flex-1 rounded-xl font-bold transition-all border border-gray-100">출고</button>
-                      <button @click="logForm.type = '입고'" :class="logForm.type === '입고' ? 'bg-[#C5E1FF] text-gray-900 shadow-md' : 'bg-gray-50 text-gray-400 hover:bg-gray-100'" class="flex-1 rounded-xl font-bold transition-all border border-gray-100">입고</button>
-                      <button @click="logForm.type = '양도'" :class="logForm.type === '양도' ? 'bg-[#FFF2CC] text-gray-900 shadow-md' : 'bg-gray-50 text-gray-400 hover:bg-gray-100'" class="flex-1 rounded-xl font-bold transition-all border border-gray-100">양도</button>
+                  <div class="space-y-1">
+                    <label class="block text-[11px] font-black text-gray-400">구분</label>
+                    <div class="flex gap-1.5 h-[46px]">
+                      <button @click="logForm.type = '출고'" :class="logForm.type === '출고' ? 'bg-[#FABCBC] text-gray-900 shadow-md' : 'bg-gray-50 text-gray-400 hover:bg-gray-100'" class="action-btn flex-1 rounded-xl font-bold text-sm transition-all border border-gray-100">출고</button>
+                      <button @click="logForm.type = '입고'" :class="logForm.type === '입고' ? 'bg-[#C5E1FF] text-gray-900 shadow-md' : 'bg-gray-50 text-gray-400 hover:bg-gray-100'" class="action-btn flex-1 rounded-xl font-bold text-sm transition-all border border-gray-100">입고</button>
+                      <button @click="logForm.type = '양도'" :class="logForm.type === '양도' ? 'bg-[#FFF2CC] text-gray-900 shadow-md' : 'bg-gray-50 text-gray-400 hover:bg-gray-100'" class="action-btn flex-1 rounded-xl font-bold text-sm transition-all border border-gray-100">양도</button>
                     </div>
                   </div>
+                  
+                  <div class="space-y-1">
+                    <label class="block text-[11px] font-black text-gray-400">브랜드</label>
+                    <div class="flex gap-1.5 h-[46px]">
+                      <button @click="logForm.brand = 'Kybun'; logForm.modelName = ''" :class="logForm.brand === 'Kybun' ? 'bg-blue-600 text-white' : 'bg-gray-100 text-gray-500'" class="action-btn flex-1 rounded-xl font-bold text-sm">기분</button>
+                      <button @click="logForm.brand = 'Joya'; logForm.modelName = ''" :class="logForm.brand === 'Joya' ? 'bg-orange-600 text-white' : 'bg-gray-100 text-gray-500'" class="action-btn flex-1 rounded-xl font-bold text-sm">조야</button>
+                    </div>
                   </div>
-                
-                <div class="grid grid-cols-1 sm:grid-cols-3 gap-5">
-                  <div class="space-y-1.5"><label class="block text-xs font-black text-gray-400">브랜드</label>
-                    <div class="flex gap-2 h-[52px]">
-                      <button @click="logForm.brand = 'Kybun'; logForm.modelName = ''" :class="logForm.brand === 'Kybun' ? 'bg-blue-600 text-white' : 'bg-gray-100 text-gray-500'" class="flex-1 rounded-xl font-bold">기분</button>
-                      <button @click="logForm.brand = 'Joya'; logForm.modelName = ''" :class="logForm.brand === 'Joya' ? 'bg-orange-600 text-white' : 'bg-gray-100 text-gray-500'" class="flex-1 rounded-xl font-bold">조야</button>
-                    </div></div>
-                  <div class="space-y-1.5 sm:col-span-2"><label class="block text-xs font-black text-gray-400">상품명</label>
-                    <select v-model="logForm.modelName" class="w-full px-4 py-3 border-2 border-gray-100 rounded-2xl font-bold bg-white">
-                      <option value="" disabled>모델 선택</option><option v-for="model in availableModelsForForm" :key="model" :value="model">{{ model }}</option>
-                    </select></div>
+
+                  <div class="space-y-1">
+                    <label class="block text-[11px] font-black text-gray-400">상품명</label>
+                    <select v-model="logForm.modelName" class="w-full px-3 py-2 border-2 border-gray-100 rounded-xl text-sm font-bold bg-white h-[46px] outline-none">
+                      <option value="" disabled>모델 선택</option>
+                      <option v-for="model in availableModelsForForm" :key="model" :value="model">{{ model }}</option>
+                    </select>
+                  </div>
+                  
+                  <div class="grid grid-cols-2 gap-4">
+                    <div class="space-y-1">
+                      <label class="block text-[11px] font-black text-gray-400">사이즈</label>
+                      <select v-model="logForm.size" class="w-full px-3 py-2 border-2 border-indigo-100 rounded-xl text-indigo-700 font-black bg-indigo-50/30 text-sm h-[46px] outline-none">
+                        <option v-for="size in availableSizes" :key="size" :value="size">{{ size }}</option>
+                      </select>
+                    </div>
+                    <div class="space-y-1">
+                      <label class="block text-[11px] font-black text-gray-400">수량</label>
+                      <div class="relative">
+                        <input v-model="logForm.quantity" type="number" min="1" class="w-full px-3 py-2 border-2 border-gray-100 rounded-xl font-black text-right pr-9 bg-white text-sm h-[46px] outline-none">
+                        <span class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 font-bold text-[11px]">족</span>
+                      </div>
+                    </div>
+                  </div>
+
                 </div>
                 
-                <div class="grid grid-cols-2 gap-5">
-                  <div class="space-y-1.5"><label class="block text-xs font-black text-gray-400">사이즈</label>
-                    <select v-model="logForm.size" class="w-full px-4 py-3 border-2 border-indigo-100 rounded-2xl text-indigo-700 font-black bg-indigo-50/30">
-                      <option v-for="size in availableSizes" :key="size" :value="size">{{ size }}</option>
-                    </select></div>
-                  <div class="space-y-1.5"><label class="block text-xs font-black text-gray-400">수량</label>
-                    <div class="relative"><input v-model="logForm.quantity" type="number" min="1" class="w-full px-4 py-3 border-2 border-gray-100 rounded-2xl font-black text-right pr-12 bg-white">
-                      <span class="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 font-bold text-sm">족</span></div></div>
-                </div>
+                <button @click="submitLog" class="action-btn flex-[1] py-4 rounded-2xl transition-all font-black text-3xl tracking-[0.2em] shadow-sm hover:shadow-md active:scale-[0.98]" :class="{'bg-[#FABCBC]': logForm.type === '출고', 'bg-[#C5E1FF]': logForm.type === '입고', 'bg-[#FFF2CC]': logForm.type === '양도'}">
+                  {{ logForm.type }} 등록
+                </button>
               </div>
-              
-              <button @click="submitLog" class="lg:w-48 py-6 rounded-3xl transition-all font-black text-4xl" :class="{'bg-[#FABCBC]': logForm.type === '출고', 'bg-[#C5E1FF]': logForm.type === '입고', 'bg-[#FFF2CC]': logForm.type === '양도'}">
-                {{ logForm.type }} 등록
-              </button>
+            </div>
+          </div>
+
+          <div>
+            <div class="flex justify-between items-center mb-3">
+              <div class="flex items-center gap-2">
+                <h2 class="text-sm font-bold text-gray-700">
+                  📝 입출고 내역 
+                </h2>
+                <button @click="resetLogView" class="action-btn text-gray-500 hover:text-indigo-600 bg-white border border-gray-200 hover:bg-gray-50 w-7 h-7 rounded-lg flex justify-center items-center transition-all shadow-sm active:scale-95 text-xs font-bold" title="필터 및 선택 초기화">
+                  🔄
+                </button>
+              </div>
+
+              <div class="flex gap-2 items-center">
+                <button @click="deleteSelectedLog" 
+                        :class="selectedLogId ? 'bg-red-500 text-white border-red-600 shadow-md hover:bg-red-600 active:scale-95' : 'bg-gray-100 text-gray-400 border-gray-200 cursor-not-allowed opacity-70'" 
+                        class="action-btn text-[11px] font-bold px-3 py-1.5 rounded-lg border transition-all flex items-center gap-1">
+                  🗑️ 삭제
+                </button>
+                <button @click="fetchTransactionLogs(true)" class="action-btn text-[11px] font-bold text-indigo-500 hover:text-indigo-700 flex items-center gap-1 bg-white px-3 py-1.5 rounded-lg border shadow-sm active:scale-95 transition-all">
+                  <span :class="{'animate-spin': isFetchingLogs}">🔄</span> 동기화
+                </button>
+              </div>
+            </div>
+            
+            <div class="overflow-x-auto pb-4">
+              <table class="w-full lg:min-w-[700px] text-center text-[11px] sm:text-xs whitespace-nowrap border-separate" style="border-spacing: 0 4px;">
+                <thead class="text-gray-400">
+                  <tr>
+                    <th class="font-bold pb-1 text-left pl-2 sm:pl-6">
+                      <div class="flex items-center gap-1.5">
+                        <span>날짜</span>
+                        <div class="relative w-4 h-4 cursor-pointer text-gray-400 hover:text-indigo-500 transition-colors" title="날짜로 검색">
+                          📅
+                          <input type="date" v-model="filterDate" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer" />
+                        </div>
+                      </div>
+                    </th>
+                    <th class="font-bold pb-1">구분</th>
+                    <th class="font-bold pb-1">브랜드</th>
+                    <th class="font-bold pb-1 text-left pl-2">상품명</th>
+                    <th class="font-bold pb-1">사이즈</th>
+                    <th class="font-bold pb-1 pr-2 sm:pr-6 text-right">수량</th>
+                  </tr>
+                </thead>
+                <TransitionGroup tag="tbody" name="list">
+                  <tr v-if="isFetchingLogs && displayTransactionLogs.length === 0" key="loading-row"><td colspan="6" class="px-2 py-4 text-center text-indigo-400 font-bold bg-white rounded-xl shadow-sm border border-gray-100">데이터를 불러오는 중입니다...</td></tr>
+                  <tr v-else-if="displayTransactionLogs.length === 0" key="empty-row"><td colspan="6" class="px-2 py-4 text-center text-gray-400 bg-white rounded-xl shadow-sm border border-gray-100">조건에 맞는 내역이 없습니다.</td></tr>
+                  
+                  <tr v-for="log in displayTransactionLogs" :key="log.id" 
+                      @click="selectedLogId = selectedLogId === log.id ? null : log.id"
+                      class="log-row cursor-pointer transition-all duration-200 select-none"
+                      :class="selectedLogId === log.id ? 'scale-[1.01] z-10 relative drop-shadow-md' : 'hover:scale-[1.005]'">
+                    
+                    <td class="px-2 sm:px-6 py-2 sm:py-3 rounded-l-lg transition-colors font-bold text-left" 
+                        :class="selectedLogId === log.id ? 'bg-indigo-600 text-white' : getRowBg(log.type)">
+                        {{ getFormattedDate(log.date) }}
+                    </td>
+                    <td class="px-1 py-2 sm:py-3 font-bold transition-colors" 
+                        :class="selectedLogId === log.id ? 'bg-indigo-600 text-white' : getRowBg(log.type)">
+                        {{ log.type }}
+                    </td>
+                    <td class="px-1 py-2 sm:py-3 transition-colors font-bold" 
+                        :class="selectedLogId === log.id ? 'bg-indigo-600 text-indigo-100' : getRowBg(log.type)">
+                        {{ log.brand === 'Kybun' ? '기분' : (log.brand === 'Joya' ? '조야' : log.brand) }}
+                    </td>
+                    <td class="px-2 py-2 sm:py-3 font-bold transition-colors text-left" 
+                        :class="selectedLogId === log.id ? 'bg-indigo-600 text-white' : getRowBg(log.type)">
+                        {{ log.modelName }}
+                    </td>
+                    <td class="px-1 py-2 sm:py-3 font-bold transition-colors" 
+                        :class="selectedLogId === log.id ? 'bg-indigo-600 text-white' : getRowBg(log.type)">
+                        {{ log.size }}
+                    </td>
+                    <td class="px-2 sm:px-6 py-2 sm:py-3 font-black transition-colors rounded-r-lg text-right" 
+                        :class="selectedLogId === log.id ? 'bg-indigo-600 text-yellow-300' : getRowBg(log.type)">
+                      {{ log.type === '재고조정' && log.quantity > 0 ? '+' : ''}}{{ log.quantity }}
+                    </td>
+                  </tr>
+                </TransitionGroup>
+              </table>
             </div>
           </div>
         </div>
 
-        <div>
-          <div class="flex justify-between items-center mb-3">
-            <h2 class="text-sm font-bold text-gray-700 flex items-center gap-2">
-              최근 입출고 내역 
-              <span class="flex items-center text-green-500 text-xs bg-green-50 px-2 py-0.5 rounded-full border border-green-200">
-                <span class="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse mr-1"></span>실시간 동기화 중
-              </span>
-            </h2>
-            <button @click="fetchTransactionLogs(true)" class="text-xs font-bold text-indigo-500 hover:text-indigo-700 flex items-center gap-1 bg-white px-3 py-1.5 rounded-lg border shadow-sm">
-              <span :class="{'animate-spin': isFetchingLogs}">🔄</span> 강제 전체 동기화
-            </button>
-          </div>
-          <div class="overflow-x-auto">
-            <table class="w-full text-left text-sm whitespace-nowrap border-separate" style="border-spacing: 0 8px;">
-              <thead class="text-gray-500">
-                <tr><th class="w-12"></th><th>날짜</th><th>구분</th><th>브랜드</th><th>상품명</th><th class="text-center">사이즈</th><th class="text-right pr-6">수량</th></tr>
-              </thead>
-              <TransitionGroup tag="tbody" name="list">
-                <tr v-if="isFetchingLogs && displayTransactionLogs.length === 0" key="loading-row"><td colspan="7" class="px-6 py-8 text-center text-indigo-400 font-bold bg-white rounded-xl shadow-sm border border-gray-100">데이터를 안전하게 불러오는 중입니다...</td></tr>
-                <tr v-else-if="displayTransactionLogs.length === 0" key="empty-row"><td colspan="7" class="px-6 py-8 text-center text-gray-400 bg-white rounded-xl shadow-sm border border-gray-100">아직 등록된 내역이 없습니다.</td></tr>
-                <tr v-for="log in displayTransactionLogs" :key="log.id" class="group/row">
-                  <td class="text-center"><button @click="deleteLog(log)" class="text-gray-400 hover:text-red-500 opacity-0 group-hover/row:opacity-100 transition">🗑️</button></td>
-                  <td class="px-4 py-4 rounded-l-xl transition-colors" :class="getRowBg(log.type)">{{ getFormattedDate(log.date) }}</td>
-                  <td class="px-4 py-4 font-bold transition-colors" :class="getRowBg(log.type)">{{ log.type }}</td>
-                  <td class="px-4 py-4 transition-colors" :class="getRowBg(log.type)">
-                  {{ log.brand === 'Kybun' ? '기분' : (log.brand === 'Joya' ? '조야' : log.brand) }}
-                  </td>
-                  <td class="px-4 py-4 font-bold transition-colors" :class="getRowBg(log.type)">{{ log.modelName }}</td>
-                  <td class="px-4 py-4 text-center font-bold transition-colors" :class="getRowBg(log.type)">{{ log.size }}</td>
-                  <td class="px-4 py-4 text-right pr-6 font-black transition-colors rounded-r-xl" :class="getRowBg(log.type)">
-                    {{ log.type === '재고조정' && log.quantity > 0 ? '+' : ''}}{{ log.quantity }}
-                  </td>
-                </tr>
-              </TransitionGroup>
-            </table>
-          </div>
-        </div>
-      </div>
-
-      <div v-if="currentTab === 'status'" class="space-y-4">
+<div v-if="currentTab === 'status'" class="space-y-4">
         
-        <div class="flex flex-col md:flex-row gap-4 items-end bg-white p-4 rounded-2xl shadow-sm sticky top-[80px] z-20 border-2 border-gray-100 transition-colors">
-          <div class="flex-1 space-y-1.5"><label class="text-xs font-black text-gray-400">모델 선택 (브랜드)</label>
-            <div class="flex gap-2">
-              <button @click="selectedBrand = 'All'" :class="selectedBrand === 'All' ? 'bg-indigo-600 text-white shadow-md' : 'bg-gray-50 text-gray-500 border border-gray-200'" class="px-4 py-2 rounded-xl font-bold transition-all">전체</button>
-              <button @click="selectedBrand = 'Kybun'" :class="selectedBrand === 'Kybun' ? 'bg-blue-600 text-white shadow-md' : 'bg-gray-50 text-gray-500 border border-gray-200'" class="px-4 py-2 rounded-xl font-bold transition-all">기분</button>
-              <button @click="selectedBrand = 'Joya'" :class="selectedBrand === 'Joya' ? 'bg-orange-600 text-white shadow-md' : 'bg-gray-50 text-gray-500 border border-gray-200'" class="px-4 py-2 rounded-xl font-bold transition-all">조야</button>
-            </div>
-          </div>
-          <div class="flex-[2] space-y-1.5 relative"><label class="text-xs font-black text-gray-400">모델 검색</label>
+        <div class="flex flex-col md:flex-row gap-4 items-stretch md:items-end bg-white p-4 rounded-2xl shadow-sm sticky top-[80px] z-20 border-2 border-gray-100 transition-colors">
+          
+          <div class="w-full md:flex-1 space-y-1.5 relative">
+            <label class="text-xs font-black text-gray-400">모델 검색</label>
             <input v-model="searchQuery" type="text" placeholder="검색어를 입력하세요" class="w-full px-4 py-2.5 rounded-xl border border-gray-200 bg-gray-50 font-bold pr-10 outline-none focus:ring-2 focus:ring-indigo-500 transition-all">
             <button v-if="searchQuery" @click="searchQuery = ''" class="absolute right-3 top-[34px] w-5 h-5 flex items-center justify-center bg-gray-300 hover:bg-gray-400 text-white rounded-full text-xs font-bold transition-colors">X</button>
           </div>
-          <div class="flex gap-2 h-[46px]">
-            <button @click="showModal = true" class="bg-indigo-600 text-white px-5 rounded-xl font-black shadow-md hover:bg-indigo-700 transition">+ 새 모델 추가</button>
+          
+          <div class="w-full md:w-auto h-[46px]">
+            <button @click="showModal = true" class="w-full h-full bg-indigo-600 text-white px-5 rounded-xl font-black shadow-md hover:bg-indigo-700 transition">+ 새 모델 추가</button>
           </div>
         </div>
 
         <div class="pt-4">
           <div class="flex justify-between items-center mb-3">
-            <button @click="toggleEditMode" class="flex items-center gap-2 px-5 py-2.5 rounded-xl font-black transition-all shadow-sm border-2"
-                    :class="isEditMode ? 'bg-red-50 text-red-600 border-red-500' : 'bg-white text-gray-700 border-gray-200 hover:bg-gray-50'">
-              <span class="text-lg">{{ isEditMode ? '💾' : '✏️' }}</span>
-              {{ isEditMode ? '수정 완료 (저장)' : '다이렉트 재고 수정 (엑셀 붙여넣기 지원)' }}
-            </button>
+            
+            <div class="flex gap-2">
+              <button @click="selectedBrand = 'All'" :class="selectedBrand === 'All' ? 'bg-indigo-600 text-white shadow-md border-indigo-600' : 'bg-white text-gray-600 border-gray-200 hover:bg-gray-50'" class="px-4 py-2 rounded-xl font-bold transition-all text-[13px] border">전체</button>
+              <button @click="selectedBrand = 'Kybun'" :class="selectedBrand === 'Kybun' ? 'bg-blue-600 text-white shadow-md border-blue-600' : 'bg-white text-gray-600 border-gray-200 hover:bg-gray-50'" class="px-4 py-2 rounded-xl font-bold transition-all text-[13px] border">기분</button>
+              <button @click="selectedBrand = 'Joya'" :class="selectedBrand === 'Joya' ? 'bg-orange-600 text-white shadow-md border-orange-600' : 'bg-white text-gray-600 border-gray-200 hover:bg-gray-50'" class="px-4 py-2 rounded-xl font-bold transition-all text-[13px] border">조야</button>
+            </div>
 
-            <button @click="toggleB2BMode" class="flex items-center gap-2 px-5 py-2.5 rounded-xl font-black transition-all shadow-sm border-2"
+            <button @click="toggleB2BMode" class="flex items-center gap-1.5 px-4 py-2 rounded-xl font-black transition-all shadow-sm border-2"
                     :class="isB2BMode ? 'bg-indigo-600 text-white border-indigo-700' : 'bg-white text-indigo-600 border-indigo-200 hover:bg-indigo-50'">
-              <span v-if="isLoadingB2B" class="animate-spin text-lg">⏳</span>
-              <span v-else class="text-lg">{{ isB2BMode ? '✅' : '🌐' }}</span>
-              {{ isB2BMode ? (isLoadingB2B ? 'B2B 갱신 중...' : 'B2B 연동 켜짐') : 'B2B 실시간 재고 켜기' }}
+              <span v-if="isLoadingB2B" class="animate-spin text-sm">⏳</span>
+              <span v-else class="text-sm">{{ isB2BMode ? '✅' : '🌐' }}</span>
+              <span class="text-[13px]">{{ isB2BMode ? (isLoadingB2B ? 'B2B 갱신 중...' : 'B2B 켜짐') : 'B2B 재고' }}</span>
             </button>
           </div>
 
@@ -183,7 +232,19 @@
               <thead class="sticky top-0 z-30 shadow-md">
                 <tr class="bg-[#5c7f59] text-white">
                   <th class="px-3 py-3 font-bold border-r border-[#6b8e68] text-center w-16 bg-[#5c7f59]">브랜드</th>
-                  <th class="px-4 py-3 font-bold border-r border-[#6b8e68] text-center min-w-[200px] bg-[#5c7f59]">상품명</th>
+                  
+                  <th class="px-4 py-3 font-bold border-r border-[#6b8e68] text-center min-w-[200px] bg-[#5c7f59]">
+                    <div class="flex items-center justify-center gap-2">
+                      <span>상품명</span>
+                      <button @click="toggleEditMode" 
+                              class="flex justify-center items-center w-7 h-7 rounded-lg transition-all shadow-sm active:scale-95"
+                              :class="isEditMode ? 'bg-red-500 text-white hover:bg-red-600 border border-red-600' : 'bg-white/20 text-white hover:bg-white/30 border border-transparent'"
+                              :title="isEditMode ? '수정 완료 (저장)' : '재고 수정'">
+                        <span class="text-[13px]">{{ isEditMode ? '💾' : '✏️' }}</span>
+                      </button>
+                    </div>
+                  </th>
+                  
                   <th v-for="size in availableSizes" :key="size" 
                       @click="toggleSizeSort(size)"
                       class="px-1 py-3 font-bold border-r border-[#6b8e68] w-12 text-center transition-all cursor-pointer hover:bg-[#4a6b47]"
@@ -451,7 +512,7 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted } from 'vue'
+import { ref, computed, onMounted, onUnmounted } from 'vue'
 import { createClient } from '@supabase/supabase-js'
 
 // ==========================================
@@ -461,7 +522,6 @@ const supabaseUrl = import.meta.env.VITE_SUPABASE_URL
 const supabaseKey = import.meta.env.VITE_SUPABASE_KEY
 const supabase = createClient(supabaseUrl, supabaseKey)
 
-// 본사 API 통신용 토큰
 const HQ_API_TOKEN = import.meta.env.VITE_HQ_API_TOKEN;
 
 const isAuthenticated = ref(false)
@@ -477,220 +537,24 @@ const weekDays = ['일', '월', '화', '수', '목', '금', '토']
 
 const createEmptySizes = () => { const s = {}; availableSizes.forEach(sz => s[sz] = 0); return s; }
 
-// ------------------------------------------
-// 🔥 새로 추가할 날짜 포맷팅 로직
-// ------------------------------------------
-const formattedFormDate = computed(() => {
-  if (!logForm.value.date) return '';
-  const d = new Date(logForm.value.date);
-  const yy = String(d.getFullYear()).slice(-2);
-  const mm = String(d.getMonth() + 1).padStart(2, '0');
-  const dd = String(d.getDate()).padStart(2, '0');
-  const day = weekDays[d.getDay()];
-  return `${yy}-${mm}-${dd}(${day})`;
-});
-
 // ==========================================
 // 👟 오리지널 전체 신발 리스트
 // ==========================================
 const rawList = [
-  { brand: 'Kybun', modelName: '가야 20 블랙' },
-  { brand: 'Kybun', modelName: '겐프 브론즈 W' },
-  { brand: 'Kybun', modelName: '겐프 블랙 W' },
-  { brand: 'Kybun', modelName: '고려 20 블랙' },
-  { brand: 'Kybun', modelName: '글라루스 블랙 W' },
-  { brand: 'Kybun', modelName: '글라루스 블루 W' },
-  { brand: 'Kybun', modelName: '글라루스 틴 W' },
-  { brand: 'Kybun', modelName: '글라루스 화이트 W' },
-  { brand: 'Kybun', modelName: '기분파크 20 블랙 W' },
-  { brand: 'Kybun', modelName: '니온 20 네이비 W' },
-  { brand: 'Kybun', modelName: '니온 20 블랙 W' },
-  { brand: 'Kybun', modelName: '렌시 블랙' },
-  { brand: 'Kybun', modelName: '로이크 20 브론즈 W' },
-  { brand: 'Kybun', modelName: '로이크 20 블랙 W' },
-  { brand: 'Kybun', modelName: '로카르노 캐비어 W' },
-  { brand: 'Kybun', modelName: '롤 네이비 M' },
-  { brand: 'Kybun', modelName: '롤 화이트 M' },
-  { brand: 'Kybun', modelName: '루체른 20 캐비어 W' },
-  { brand: 'Kybun', modelName: '뤼티 그레이 M' },
-  { brand: 'Kybun', modelName: '뤼티 블랙 M' },
-  { brand: 'Kybun', modelName: '뤼티 블루 M' },
-  { brand: 'Kybun', modelName: '리기 20 아쿠아 W' },
-  { brand: 'Kybun', modelName: '마글린겐 M 그레이' },
-  { brand: 'Kybun', modelName: '마일렌 골드' },
-  { brand: 'Kybun', modelName: '마일렌 블랙 그레이 M' },
-  { brand: 'Kybun', modelName: '마테호른 20 다크블루 M' },
-  { brand: 'Kybun', modelName: '몬타나 진회색 W' },
-  { brand: 'Kybun', modelName: '바덴 블랙 W' },
-  { brand: 'Kybun', modelName: '바우마 20 블랙' },
-  { brand: 'Kybun', modelName: '바우마 20 블루' },
-  { brand: 'Kybun', modelName: '바우마 20 샌드' },
-  { brand: 'Kybun', modelName: '바우마 20 퍼플' },
-  { brand: 'Kybun', modelName: '바우마 그레이' },
-  { brand: 'Kybun', modelName: '바우마 실버' },
-  { brand: 'Kybun', modelName: '바우마 핑크' },
-  { brand: 'Kybun', modelName: '바우마 화이트' },
-  { brand: 'Kybun', modelName: '바우마 CL 블랙' },
-  { brand: 'Kybun', modelName: '바젤 20 오닉스 W' },
-  { brand: 'Kybun', modelName: '발스 20 블랙 W' },
-  { brand: 'Kybun', modelName: '베르니에 20 블랙 W' },
-  { brand: 'Kybun', modelName: '부르크도르프 블랙' },
-  { brand: 'Kybun', modelName: '브리그 그레이 W' },
-  { brand: 'Kybun', modelName: '비엘 블랙' },
-  { brand: 'Kybun', modelName: '비엘 실버 W' },
-  { brand: 'Kybun', modelName: '사르간스 샌드 M' },
-  { brand: 'Kybun', modelName: '센티스 20 블랙 M' },
-  { brand: 'Kybun', modelName: '수르제 20 그레이블루' },
-  { brand: 'Kybun', modelName: '수르제 20 블루레드' },
-  { brand: 'Kybun', modelName: '스피츠 블랙 W' },
-  { brand: 'Kybun', modelName: '시러스 DXB 블루옐로우 W' },
-  { brand: 'Kybun', modelName: '시온 20 블랙 W' },
-  { brand: 'Kybun', modelName: '시온 20 피치 W' },
-  { brand: 'Kybun', modelName: '시온 화이트 W' },
-  { brand: 'Kybun', modelName: '실바플라나 20 블랙 M' },
-  { brand: 'Kybun', modelName: '아라우 블랙' },
-  { brand: 'Kybun', modelName: '아라우 블루 W' },
-  { brand: 'Kybun', modelName: '아로사 20 블랙 W' },
-  { brand: 'Kybun', modelName: '아스코나 20 샌드' },
-  { brand: 'Kybun', modelName: '아이롤로 20 앤트러사이트 M' },
-  { brand: 'Kybun', modelName: '아이롤로 문 락 M' },
-  { brand: 'Kybun', modelName: '오본느 블랙 W' },
-  { brand: 'Kybun', modelName: '오본느 블랙체크 W' },
-  { brand: 'Kybun', modelName: '올텐 블랙 M' },
-  { brand: 'Kybun', modelName: '우리 블랙 M' },
-  { brand: 'Kybun', modelName: '우스터 20 문 락 W' },
-  { brand: 'Kybun', modelName: '우스터 블랙 W' },
-  { brand: 'Kybun', modelName: '융프라우 20 피넛 W' },
-  { brand: 'Kybun', modelName: '인터라켄 20 그레이' },
-  { brand: 'Kybun', modelName: '조나 20 블랙 W' },
-  { brand: 'Kybun', modelName: '조나 20 토프 W' },
-  { brand: 'Kybun', modelName: '쥐라 블랙' },
-  { brand: 'Kybun', modelName: '쥬크 20 브라운 M' },
-  { brand: 'Kybun', modelName: '쥬크 20 캐비어 M' },
-  { brand: 'Kybun', modelName: '취리히 II 브라운' },
-  { brand: 'Kybun', modelName: '취리히 II 블랙' },
-  { brand: 'Kybun', modelName: '카루즈 20 그래파이트 M' },
-  { brand: 'Kybun', modelName: '카루즈 20 올리브 M' },
-  { brand: 'Kybun', modelName: '칼 그레이블루' },
-  { brand: 'Kybun', modelName: '칼 베이지' },
-  { brand: 'Kybun', modelName: '쾨니즈 20 그레이 M' },
-  { brand: 'Kybun', modelName: '쾨니즈 탄 M' },
-  { brand: 'Kybun', modelName: '쿠어 20 블랙 M' },
-  { brand: 'Kybun', modelName: '클로스터스 블랙 W' },
-  { brand: 'Kybun', modelName: '클로텐 캐비어 M' },
-  { brand: 'Kybun', modelName: '키아소 블랙 M' },
-  { brand: 'Kybun', modelName: '테네로 20 그레이 W' },
-  { brand: 'Kybun', modelName: '테신 20 레드 W' },
-  { brand: 'Kybun', modelName: '테신 블랙 W' },
-  { brand: 'Kybun', modelName: '테신 인디고 W' },
-  { brand: 'Kybun', modelName: '테신 화이트 W' },
-  { brand: 'Kybun', modelName: '툰 20 블랙 M' },
-  { brand: 'Kybun', modelName: '파도 블랙 M' },
-  { brand: 'Kybun', modelName: '푸라 실버' },
-  { brand: 'Kybun', modelName: '필름스 그레이옐로우' },
-  { brand: 'Kybun', modelName: '하이덴 브라운 M' },
-  { brand: 'Joya', modelName: 'ID Zack III 블랙' },
-  { brand: 'Joya', modelName: 'ID Zack 블루' },
-  { brand: 'Joya', modelName: 'ID ZOOM II 블랙핑크' },
-  { brand: 'Joya', modelName: 'ID ZOOM III 그레이블루' },
-  { brand: 'Joya', modelName: 'ID ZOOM III 다크그레이' },
-  { brand: 'Joya', modelName: '다이나모 벨로체 블루' },
-  { brand: 'Joya', modelName: '다이나모 짚 다크그레이' },
-  { brand: 'Joya', modelName: '다이나모 짚 베이지' },
-  { brand: 'Joya', modelName: '다이나모 짚 블랙 II' },
-  { brand: 'Joya', modelName: '다이나모 짚 블랙 III' },
-  { brand: 'Joya', modelName: '다이나모 짚 화이트 M' },
-  { brand: 'Joya', modelName: '다이나모 짚 화이트 W' },
-  { brand: 'Joya', modelName: '더블린 블랙' },
-  { brand: 'Joya', modelName: '라우라 라이트 그레이' },
-  { brand: 'Joya', modelName: '라우라 라이트 블루 III' },
-  { brand: 'Joya', modelName: '라우라 블랙' },
-  { brand: 'Joya', modelName: '라우라 화이트' },
-  { brand: 'Joya', modelName: '릴렉스 II 블랙' },
-  { brand: 'Joya', modelName: '마벨라 라이트 그레이' },
-  { brand: 'Joya', modelName: '마우이 블랙' },
-  { brand: 'Joya', modelName: '마우이 화이트' },
-  { brand: 'Joya', modelName: '마우이 STX 블루' },
-  { brand: 'Joya', modelName: '말루쿠 라이트 그레이' },
-  { brand: 'Joya', modelName: '말루쿠 옐로우블랙' },
-  { brand: 'Joya', modelName: '메리다 레드' },
-  { brand: 'Joya', modelName: '모스코 다크블루' },
-  { brand: 'Joya', modelName: '모스코 브라운' },
-  { brand: 'Joya', modelName: '모스코 짚 블루' },
-  { brand: 'Joya', modelName: '몬타나 PTX 베이지' },
-  { brand: 'Joya', modelName: '몬타나 PTX 블랙 II' },
-  { brand: 'Joya', modelName: '몬타나 PTX 커리브라운' },
-  { brand: 'Joya', modelName: '베니스 블랙 II' },
-  { brand: 'Joya', modelName: '베니스 짚 라이트베이지' },
-  { brand: 'Joya', modelName: '베니스 짚 베이지' },
-  { brand: 'Joya', modelName: '베니스 짚 블랙' },
-  { brand: 'Joya', modelName: '베니스 짚 화이트' },
-  { brand: 'Joya', modelName: '벨로체 블랙' },
-  { brand: 'Joya', modelName: '벨로체 화이트' },
-  { brand: 'Joya', modelName: '비엔나 II 블랙' },
-  { brand: 'Joya', modelName: '비엔나 화이트' },
-  { brand: 'Joya', modelName: '스벤 브라운' },
-  { brand: 'Joya', modelName: '시드니 II 라이트블루' },
-  { brand: 'Joya', modelName: '시드니 II 블루' },
-  { brand: 'Joya', modelName: '시에라 STX 브라운블랙' },
-  { brand: 'Joya', modelName: '시카고 브라운' },
-  { brand: 'Joya', modelName: '시카고 블랙' },
-  { brand: 'Joya', modelName: '알렉산더 다크블루' },
-  { brand: 'Joya', modelName: '알렉산더 브라운' },
-  { brand: 'Joya', modelName: '에드워드 블랙' },
-  { brand: 'Joya', modelName: '에이스 SR 블랙' },
-  { brand: 'Joya', modelName: '에이스 SR 화이트' },
-  { brand: 'Joya', modelName: '엘레나 라이트베이지' },
-  { brand: 'Joya', modelName: '엘렉트라 화이트그레이' },
-  { brand: 'Joya', modelName: '오사카 블랙' },
-  { brand: 'Joya', modelName: '제니 라이트골드' },
-  { brand: 'Joya', modelName: '제니 블랙' },
-  { brand: 'Joya', modelName: '취리히 II 브라운' },
-  { brand: 'Joya', modelName: '카도레 STX 브라운블랙' },
-  { brand: 'Joya', modelName: '칸쿤 II 블루' },
-  { brand: 'Joya', modelName: '칸쿤 II 화이트그레이' },
-  { brand: 'Joya', modelName: '칸쿤 SR 블랙' },
-  { brand: 'Joya', modelName: '칸쿤 stx 블랙' },
-  { brand: 'Joya', modelName: '코모 II 브라운' },
-  { brand: 'Joya', modelName: '코모 II 블랙' },
-  { brand: 'Joya', modelName: '코모도 SR 화이트' },
-  { brand: 'Joya', modelName: '코모도 라이트 블루/화이트' },
-  { brand: 'Joya', modelName: '코모도 레드' },
-  { brand: 'Joya', modelName: '코모도 베이지' },
-  { brand: 'Joya', modelName: '코모도 블랙' },
-  { brand: 'Joya', modelName: '트레블러 브라운' },
-  { brand: 'Joya', modelName: '트레블러 블랙' },
-  { brand: 'Joya', modelName: '파소피노 III 블랙' },
-  { brand: 'Joya', modelName: '플래쉬 그레이' }
+  { brand: 'Kybun', modelName: '가야 20 블랙' }, { brand: 'Kybun', modelName: '겐프 브론즈 W' }, { brand: 'Kybun', modelName: '겐프 블랙 W' }, { brand: 'Kybun', modelName: '고려 20 블랙' }, { brand: 'Kybun', modelName: '글라루스 블랙 W' }, { brand: 'Kybun', modelName: '글라루스 블루 W' }, { brand: 'Kybun', modelName: '글라루스 틴 W' }, { brand: 'Kybun', modelName: '글라루스 화이트 W' }, { brand: 'Kybun', modelName: '기분파크 20 블랙 W' }, { brand: 'Kybun', modelName: '니온 20 네이비 W' }, { brand: 'Kybun', modelName: '니온 20 블랙 W' }, { brand: 'Kybun', modelName: '렌시 블랙' }, { brand: 'Kybun', modelName: '로이크 20 브론즈 W' }, { brand: 'Kybun', modelName: '로이크 20 블랙 W' }, { brand: 'Kybun', modelName: '로카르노 캐비어 W' }, { brand: 'Kybun', modelName: '롤 네이비 M' }, { brand: 'Kybun', modelName: '롤 화이트 M' }, { brand: 'Kybun', modelName: '루체른 20 캐비어 W' }, { brand: 'Kybun', modelName: '뤼티 그레이 M' }, { brand: 'Kybun', modelName: '뤼티 블랙 M' }, { brand: 'Kybun', modelName: '뤼티 블루 M' }, { brand: 'Kybun', modelName: '리기 20 아쿠아 W' }, { brand: 'Kybun', modelName: '마글린겐 M 그레이' }, { brand: 'Kybun', modelName: '마일렌 골드' }, { brand: 'Kybun', modelName: '마일렌 블랙 그레이 M' }, { brand: 'Kybun', modelName: '마테호른 20 다크블루 M' }, { brand: 'Kybun', modelName: '몬타나 진회색 W' }, { brand: 'Kybun', modelName: '바덴 블랙 W' }, { brand: 'Kybun', modelName: '바우마 20 블랙' }, { brand: 'Kybun', modelName: '바우마 20 블루' }, { brand: 'Kybun', modelName: '바우마 20 샌드' }, { brand: 'Kybun', modelName: '바우마 20 퍼플' }, { brand: 'Kybun', modelName: '바우마 그레이' }, { brand: 'Kybun', modelName: '바우마 실버' }, { brand: 'Kybun', modelName: '바우마 핑크' }, { brand: 'Kybun', modelName: '바우마 화이트' }, { brand: 'Kybun', modelName: '바우마 CL 블랙' }, { brand: 'Kybun', modelName: '바젤 20 오닉스 W' }, { brand: 'Kybun', modelName: '발스 20 블랙 W' }, { brand: 'Kybun', modelName: '베르니에 20 블랙 W' }, { brand: 'Kybun', modelName: '부르크도르프 블랙' }, { brand: 'Kybun', modelName: '브리그 그레이 W' }, { brand: 'Kybun', modelName: '비엘 블랙' }, { brand: 'Kybun', modelName: '비엘 실버 W' }, { brand: 'Kybun', modelName: '사르간스 샌드 M' }, { brand: 'Kybun', modelName: '센티스 20 블랙 M' }, { brand: 'Kybun', modelName: '수르제 20 그레이블루' }, { brand: 'Kybun', modelName: '수르제 20 블루레드' }, { brand: 'Kybun', modelName: '스피츠 블랙 W' }, { brand: 'Kybun', modelName: '시러스 DXB 블루옐로우 W' }, { brand: 'Kybun', modelName: '시온 20 블랙 W' }, { brand: 'Kybun', modelName: '시온 20 피치 W' }, { brand: 'Kybun', modelName: '시온 화이트 W' }, { brand: 'Kybun', modelName: '실바플라나 20 블랙 M' }, { brand: 'Kybun', modelName: '아라우 블랙' }, { brand: 'Kybun', modelName: '아라우 블루 W' }, { brand: 'Kybun', modelName: '아로사 20 블랙 W' }, { brand: 'Kybun', modelName: '아스코나 20 샌드' }, { brand: 'Kybun', modelName: '아이롤로 20 앤트러사이트 M' }, { brand: 'Kybun', modelName: '아이롤로 문 락 M' }, { brand: 'Kybun', modelName: '오본느 블랙 W' }, { brand: 'Kybun', modelName: '오본느 블랙체크 W' }, { brand: 'Kybun', modelName: '올텐 블랙 M' }, { brand: 'Kybun', modelName: '우리 블랙 M' }, { brand: 'Kybun', modelName: '우스터 20 문 락 W' }, { brand: 'Kybun', modelName: '우스터 블랙 W' }, { brand: 'Kybun', modelName: '융프라우 20 피넛 W' }, { brand: 'Kybun', modelName: '인터라켄 20 그레이' }, { brand: 'Kybun', modelName: '조나 20 블랙 W' }, { brand: 'Kybun', modelName: '조나 20 토프 W' }, { brand: 'Kybun', modelName: '쥐라 블랙' }, { brand: 'Kybun', modelName: '쥬크 20 브라운 M' }, { brand: 'Kybun', modelName: '쥬크 20 캐비어 M' }, { brand: 'Kybun', modelName: '취리히 II 브라운' }, { brand: 'Kybun', modelName: '취리히 II 블랙' }, { brand: 'Kybun', modelName: '카루즈 20 그래파이트 M' }, { brand: 'Kybun', modelName: '카루즈 20 올리브 M' }, { brand: 'Kybun', modelName: '칼 그레이블루' }, { brand: 'Kybun', modelName: '칼 베이지' }, { brand: 'Kybun', modelName: '쾨니즈 20 그레이 M' }, { brand: 'Kybun', modelName: '쾨니즈 탄 M' }, { brand: 'Kybun', modelName: '쿠어 20 블랙 M' }, { brand: 'Kybun', modelName: '클로스터스 블랙 W' }, { brand: 'Kybun', modelName: '클로텐 캐비어 M' }, { brand: 'Kybun', modelName: '키아소 블랙 M' }, { brand: 'Kybun', modelName: '테네로 20 그레이 W' }, { brand: 'Kybun', modelName: '테신 20 레드 W' }, { brand: 'Kybun', modelName: '테신 블랙 W' }, { brand: 'Kybun', modelName: '테신 인디고 W' }, { brand: 'Kybun', modelName: '테신 화이트 W' }, { brand: 'Kybun', modelName: '툰 20 블랙 M' }, { brand: 'Kybun', modelName: '파도 블랙 M' }, { brand: 'Kybun', modelName: '푸라 실버' }, { brand: 'Kybun', modelName: '필름스 그레이옐로우' }, { brand: 'Kybun', modelName: '하이덴 브라운 M' },
+  { brand: 'Joya', modelName: 'ID Zack III 블랙' }, { brand: 'Joya', modelName: 'ID Zack 블루' }, { brand: 'Joya', modelName: 'ID ZOOM II 블랙핑크' }, { brand: 'Joya', modelName: 'ID ZOOM III 그레이블루' }, { brand: 'Joya', modelName: 'ID ZOOM III 다크그레이' }, { brand: 'Joya', modelName: '다이나모 벨로체 블루' }, { brand: 'Joya', modelName: '다이나모 짚 다크그레이' }, { brand: 'Joya', modelName: '다이나모 짚 베이지' }, { brand: 'Joya', modelName: '다이나모 짚 블랙 II' }, { brand: 'Joya', modelName: '다이나모 짚 블랙 III' }, { brand: 'Joya', modelName: '다이나모 짚 화이트 M' }, { brand: 'Joya', modelName: '다이나모 짚 화이트 W' }, { brand: 'Joya', modelName: '더블린 블랙' }, { brand: 'Joya', modelName: '라우라 라이트 그레이' }, { brand: 'Joya', modelName: '라우라 라이트 블루 III' }, { brand: 'Joya', modelName: '라우라 블랙' }, { brand: 'Joya', modelName: '라우라 화이트' }, { brand: 'Joya', modelName: '릴렉스 II 블랙' }, { brand: 'Joya', modelName: '마벨라 라이트 그레이' }, { brand: 'Joya', modelName: '마우이 블랙' }, { brand: 'Joya', modelName: '마우이 화이트' }, { brand: 'Joya', modelName: '마우이 STX 블루' }, { brand: 'Joya', modelName: '말루쿠 라이트 그레이' }, { brand: 'Joya', modelName: '말루쿠 옐로우블랙' }, { brand: 'Joya', modelName: '메리다 레드' }, { brand: 'Joya', modelName: '모스코 다크블루' }, { brand: 'Joya', modelName: '모스코 브라운' }, { brand: 'Joya', modelName: '모스코 짚 블루' }, { brand: 'Joya', modelName: '몬타나 PTX 베이지' }, { brand: 'Joya', modelName: '몬타나 PTX 블랙 II' }, { brand: 'Joya', modelName: '몬타나 PTX 커리브라운' }, { brand: 'Joya', modelName: '베니스 블랙 II' }, { brand: 'Joya', modelName: '베니스 짚 라이트베이지' }, { brand: 'Joya', modelName: '베니스 짚 베이지' }, { brand: 'Joya', modelName: '베니스 짚 블랙' }, { brand: 'Joya', modelName: '베니스 짚 화이트' }, { brand: 'Joya', modelName: '벨로체 블랙' }, { brand: 'Joya', modelName: '벨로체 화이트' }, { brand: 'Joya', modelName: '비엔나 II 블랙' }, { brand: 'Joya', modelName: '비엔나 화이트' }, { brand: 'Joya', modelName: '스벤 브라운' }, { brand: 'Joya', modelName: '시드니 II 라이트블루' }, { brand: 'Joya', modelName: '시드니 II 블루' }, { brand: 'Joya', modelName: '시에라 STX 브라운블랙' }, { brand: 'Joya', modelName: '시카고 브라운' }, { brand: 'Joya', modelName: '시카고 블랙' }, { brand: 'Joya', modelName: '알렉산더 다크블루' }, { brand: 'Joya', modelName: '알렉산더 브라운' }, { brand: 'Joya', modelName: '에드워드 블랙' }, { brand: 'Joya', modelName: '에이스 SR 블랙' }, { brand: 'Joya', modelName: '에이스 SR 화이트' }, { brand: 'Joya', modelName: '엘레나 라이트베이지' }, { brand: 'Joya', modelName: '엘렉트라 화이트그레이' }, { brand: 'Joya', modelName: '오사카 블랙' }, { brand: 'Joya', modelName: '제니 라이트골드' }, { brand: 'Joya', modelName: '제니 블랙' }, { brand: 'Joya', modelName: '취리히 II 브라운' }, { brand: 'Joya', modelName: '카도레 STX 브라운블랙' }, { brand: 'Joya', modelName: '칸쿤 II 블루' }, { brand: 'Joya', modelName: '칸쿤 II 화이트그레이' }, { brand: 'Joya', modelName: '칸쿤 SR 블랙' }, { brand: 'Joya', modelName: '칸쿤 stx 블랙' }, { brand: 'Joya', modelName: '코모 II 브라운' }, { brand: 'Joya', modelName: '코모 II 블랙' }, { brand: 'Joya', modelName: '코모도 SR 화이트' }, { brand: 'Joya', modelName: '코모도 라이트 블루/화이트' }, { brand: 'Joya', modelName: '코모도 레드' }, { brand: 'Joya', modelName: '코모도 베이지' }, { brand: 'Joya', modelName: '코모도 블랙' }, { brand: 'Joya', modelName: '트레블러 브라운' }, { brand: 'Joya', modelName: '트레블러 블랙' }, { brand: 'Joya', modelName: '파소피노 III 블랙' }, { brand: 'Joya', modelName: '플래쉬 그레이' }
 ]
 
 const deletedModels = ref(JSON.parse(localStorage.getItem('deleted_models') || '[]'))
+const inventory = ref([]) 
 
-const inventory = ref(rawList.map((item, idx) => ({ 
-  id: idx + 1, brand: item.brand, modelName: item.modelName, 
-  apiSlug: item.modelName === '바우마 실버' ? 'bauma-silver' : '', 
-  sizes: createEmptySizes(), 
-  draftSizes: createEmptySizes(), 
-  history: {}, 
-  hqStockData: null 
-})))
-
-// ==========================================
-// 👇👇👇 여기에 복사해서 붙여넣으세요 👇👇👇
-// ==========================================
 const selectedBrand = ref('All')
 const searchQuery = ref('')
-
-// 클릭한 사이즈를 추적하는 변수
 const sortBySize = ref(null)
 
-// 헤더 클릭 시 작동하는 함수
-const toggleSizeSort = (size) => {
-  sortBySize.value = sortBySize.value === size ? null : size
-}
+const toggleSizeSort = (size) => { sortBySize.value = sortBySize.value === size ? null : size }
 
 const sortedAndFilteredInventory = computed(() => {
-  // 1. 기존 필터링 로직
   let filtered = inventory.value.filter(shoe => {
     if (deletedModels.value.includes(shoe.modelName)) return false
     if (selectedBrand.value !== 'All' && shoe.brand !== selectedBrand.value) return false
@@ -698,91 +562,121 @@ const sortedAndFilteredInventory = computed(() => {
     return true
   })
 
-  // 2. 사이즈 헤더 클릭 시 정렬 로직 (재고 유무 기준)
   if (sortBySize.value) {
     filtered.sort((a, b) => {
       const stockA = a.sizes[sortBySize.value] || 0
       const stockB = b.sizes[sortBySize.value] || 0
-      
-      // 재고가 1개 이상이면 1, 없으면 0으로 평가
       const hasStockA = stockA > 0 ? 1 : 0
       const hasStockB = stockB > 0 ? 1 : 0
-      
-      // 1순위: 재고가 있는 신발을 위로 올림
       if (hasStockA !== hasStockB) return hasStockB - hasStockA
-      
-      // 2순위: 재고 유무가 같다면 브랜드순 정렬
-      if (a.brand !== b.brand) {
-        return a.brand === 'Kybun' ? -1 : 1
-      }
-      
-      // 3순위: 브랜드도 같다면 상품명순 정렬
+      if (a.brand !== b.brand) return a.brand === 'Kybun' ? -1 : 1
       return a.modelName.localeCompare(b.modelName)
     })
   }
-  
   return filtered
 })
-// ==========================================
-// 👆👆👆 여기까지 붙여넣기 👆👆👆
-// ==========================================
-
 
 // ==========================================
 // 🚀 Supabase 데이터 연동
 // ==========================================
 const transactionLogs = ref([])
+const uiLogs = ref([]) // 🔥 화면 하단 표 전용으로 쓸 순수 입출고 내역 분리!
+
 const isFetchingLogs = ref(false)
+const filterDate = ref('');
+const selectedLogId = ref(null);
 
-// [화면에 보여줄 입출고 내역 필터링 - 재고조정은 숨김]
+const resetLogView = () => {
+  filterDate.value = '';
+  selectedLogId.value = null;
+};
+
 const displayTransactionLogs = computed(() => {
-  return transactionLogs.value.filter(log => log.type !== '재고조정').slice(0, 50)
-})
+  // 🔥 화면 표시용 배열(uiLogs)을 쓰기 때문에 재고조정 필터를 안 거쳐도 완벽하게 예전 기록이 나타납니다.
+  let logs = uiLogs.value;
+  if (filterDate.value) {
+    return logs.filter(log => log.date && log.date.startsWith(filterDate.value));
+  }
+  return logs; 
+});
 
-const fetchTransactionLogs = async (forceFullSync = false) => {
+const handleOutsideClick = (e) => {
+  if (!e.target.closest('.log-row') && !e.target.closest('.action-btn')) {
+    selectedLogId.value = null;
+  }
+};
+
+const deleteSelectedLog = async () => {
+  if (!selectedLogId.value) return; 
+  if (!confirm('선택한 입출고 내역을 삭제하시겠어요?')) return;
+
+  const { error } = await supabase.from('logs').delete().eq('id', selectedLogId.value);
+  if (!error) { 
+    transactionLogs.value = transactionLogs.value.filter(l => l.id !== selectedLogId.value);
+    uiLogs.value = uiLogs.value.filter(l => l.id !== selectedLogId.value);
+    calculateInventory(); 
+    selectedLogId.value = null;
+  } else {
+    alert('삭제 실패: ' + error.message);
+  }
+};
+
+const fetchTransactionLogs = async () => {
   isFetchingLogs.value = true
   
-  const cacheKey = 'cached_transactions'
-  let cachedLogs = []
-  let lastId = 0
+  // 1. 모델 연동
+  let { data: modelsData, error: modelsError } = await supabase.from('models').select('*')
   
-  if (!forceFullSync) {
-    try {
-      const cachedStr = localStorage.getItem(cacheKey)
-      if (cachedStr) {
-        const parsed = JSON.parse(cachedStr)
-        if (Array.isArray(parsed)) {
-          cachedLogs = parsed
-          if (cachedLogs.length > 0) lastId = Math.max(...cachedLogs.map(l => Number(l.id) || 0))
-        }
-      }
-    } catch(e) {
-      cachedLogs = [] 
-    }
+  if (!modelsError && (!modelsData || modelsData.length === 0)) {
+    const backupPayloads = rawList.map(item => ({
+      brand: item.brand, model_name: item.modelName, api_slug: item.modelName === '바우마 실버' ? 'bauma-silver' : ''
+    }))
+    await supabase.from('models').insert(backupPayloads)
+    const retry = await supabase.from('models').select('*')
+    modelsData = retry.data
   }
 
-  let query = supabase.from('logs').select('*').order('id', { ascending: false }).limit(10000)
-  if (lastId > 0) query = query.gt('id', lastId)
+  if (modelsData) {
+    inventory.value = modelsData.map(item => ({
+      id: item.id, brand: item.brand, modelName: item.model_name, apiSlug: item.api_slug || '',
+      sizes: createEmptySizes(), draftSizes: createEmptySizes(), history: {}, hqStockData: null
+    }))
+  }
+
+  // 2. 🔥 재고 계산을 위한 '모든 로그' 끝까지 다 가져오기 (데이터 잘림 방지)
+  let allLogs = []
+  let from = 0
+  const step = 1000
   
-  const { data, error } = await query
-  
-  if (!error) { 
-    let finalLogs = forceFullSync ? (data || []) : [...(data || []), ...cachedLogs]
-    finalLogs.sort((a, b) => b.id - a.id)
+  while (true) {
+    const { data, error } = await supabase.from('logs')
+      .select('*')
+      .order('id', { ascending: false })
+      .range(from, from + step - 1)
+      
+    if (error || !data || data.length === 0) break
     
-    const uniqueLogs = []
-    const ids = new Set()
-    for (const log of finalLogs) {
-      if (!ids.has(log.id)) {
-        ids.add(log.id)
-        uniqueLogs.push(log)
-      }
-    }
-    
-    transactionLogs.value = uniqueLogs
-    localStorage.setItem(cacheKey, JSON.stringify(uniqueLogs))
+    allLogs.push(...data)
+    if (data.length < step) break 
+    from += step
+  }
+
+  if (allLogs.length > 0) {
+    transactionLogs.value = allLogs
     calculateInventory() 
   }
+
+  // 3. 화면 하단 표시용 '순수 입출고' 기록만 별도로 50개 콕 집어오기!
+  const { data: pureLogs } = await supabase.from('logs')
+    .select('*')
+    .in('type', ['출고', '입고', '양도'])
+    .order('id', { ascending: false })
+    .limit(50)
+  
+  if (pureLogs) {
+    uiLogs.value = pureLogs
+  }
+
   isFetchingLogs.value = false
 }
 
@@ -795,65 +689,102 @@ const calculateInventory = () => {
     })
   })
   
-  transactionLogs.value.forEach(log => {
+  const chronologicalLogs = [...transactionLogs.value].reverse()
+  chronologicalLogs.forEach(log => {
     const shoe = inventory.value.find(s => s.modelName === log.modelName)
-    if (shoe && log.size && log.quantity) {
-      const q = Number(log.quantity)
-      shoe.history[log.size] = true 
-
-      if (['입고', '양수', '재고조정'].includes(log.type)) shoe.sizes[log.size] += q
-      else if (['출고', '양도'].includes(log.type)) shoe.sizes[log.size] -= q
+    if (shoe && log.size) {
+      if (log.type === '재고초기화') {
+        shoe.sizes[log.size] = 0
+        shoe.history[log.size] = false 
+      } else if (log.quantity !== null && log.quantity !== undefined && log.quantity !== '') {
+        const q = Number(log.quantity)
+        if (!isNaN(q)) {
+          shoe.history[log.size] = true 
+          if (['입고', '양수', '재고조정'].includes(log.type)) shoe.sizes[log.size] += q
+          else if (['출고', '양도'].includes(log.type)) shoe.sizes[log.size] -= q
+        }
+      }
     }
   })
 }
 
+// ------------------------------------------
+// 🔥 실시간 데이터베이스 연동 감시 (onMounted)
+// ------------------------------------------
 onMounted(() => {
+  document.addEventListener('click', handleOutsideClick)
   fetchTransactionLogs()
   fetchAsRecords()
 
-  // 1. 기존: 입출고 실시간 연동
-  supabase
-    .channel('public:logs')
-    .on('postgres_changes', { event: '*', schema: 'public', table: 'logs' }, (payload) => {
-      if (payload.eventType === 'INSERT') {
-        const exists = transactionLogs.value.find(l => l.id === payload.new.id)
-        if (!exists) transactionLogs.value.unshift(payload.new)
-      } 
-      else if (payload.eventType === 'UPDATE') {
-        const index = transactionLogs.value.findIndex(l => l.id === payload.new.id)
-        if (index !== -1) transactionLogs.value[index] = payload.new
-      } 
-      else if (payload.eventType === 'DELETE') {
-        transactionLogs.value = transactionLogs.value.filter(l => l.id !== payload.old.id)
+  // 1. 로그 실시간 연동
+  supabase.channel('public:logs').on('postgres_changes', { event: '*', schema: 'public', table: 'logs' }, (payload) => {
+    if (payload.eventType === 'INSERT') {
+      const exists = transactionLogs.value.find(l => l.id === payload.new.id)
+      if (!exists) transactionLogs.value.unshift(payload.new)
+      
+      // 🔥 '출고, 입고, 양도'일 경우 화면용 배열에도 즉시 추가
+      if (['출고', '입고', '양도'].includes(payload.new.type)) {
+        const uiExists = uiLogs.value.find(l => l.id === payload.new.id)
+        if (!uiExists) uiLogs.value.unshift(payload.new)
       }
+    } 
+    else if (payload.eventType === 'UPDATE') {
+      const index = transactionLogs.value.findIndex(l => l.id === payload.new.id)
+      if (index !== -1) transactionLogs.value[index] = payload.new
+      
+      const uiIndex = uiLogs.value.findIndex(l => l.id === payload.new.id)
+      if (uiIndex !== -1) uiLogs.value[uiIndex] = payload.new
+    } 
+    else if (payload.eventType === 'DELETE') {
+      transactionLogs.value = transactionLogs.value.filter(l => l.id !== payload.old.id)
+      uiLogs.value = uiLogs.value.filter(l => l.id !== payload.old.id)
+    }
+    calculateInventory()
+  }).subscribe()
 
-      localStorage.setItem('cached_transactions', JSON.stringify(transactionLogs.value))
-      calculateInventory()
-    })
-    .subscribe()
+  // 2. AS 현황 실시간 연동
+  supabase.channel('public:as_records').on('postgres_changes', { event: '*', schema: 'public', table: 'as_records' }, (payload) => {
+    if (payload.eventType === 'INSERT') {
+      const exists = asRecords.value.find(a => a.id === payload.new.id)
+      if (!exists) asRecords.value.unshift(payload.new)
+    } 
+    else if (payload.eventType === 'UPDATE') {
+      const index = asRecords.value.findIndex(a => a.id === payload.new.id)
+      if (index !== -1) asRecords.value[index] = payload.new
+    } 
+    else if (payload.eventType === 'DELETE') {
+      asRecords.value = asRecords.value.filter(a => a.id !== payload.old.id)
+    }
+  }).subscribe()
 
-  // 2. 🔥 추가됨: AS 현황 실시간 연동 (카톡 대화창처럼!)
-  supabase
-    .channel('public:as_records')
-    .on('postgres_changes', { event: '*', schema: 'public', table: 'as_records' }, (payload) => {
-      if (payload.eventType === 'INSERT') {
-        const exists = asRecords.value.find(a => a.id === payload.new.id)
-        if (!exists) asRecords.value.unshift(payload.new)
-      } 
-      else if (payload.eventType === 'UPDATE') {
-        const index = asRecords.value.findIndex(a => a.id === payload.new.id)
-        if (index !== -1) asRecords.value[index] = payload.new
-      } 
-      else if (payload.eventType === 'DELETE') {
-        asRecords.value = asRecords.value.filter(a => a.id !== payload.old.id)
-      }
-    })
-    .subscribe()
+  // 3. 모델 실시간 연동
+  supabase.channel('public:models').on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'models' }, (payload) => {
+    const exists = inventory.value.find(s => s.id === payload.new.id)
+    if (!exists) {
+      inventory.value.push({ 
+        id: payload.new.id, brand: payload.new.brand, modelName: payload.new.model_name, apiSlug: payload.new.api_slug || '',
+        sizes: createEmptySizes(), draftSizes: createEmptySizes(), history: {}, hqStockData: null 
+      });
+    }
+  }).subscribe()
+})
+
+onUnmounted(() => {
+  document.removeEventListener('click', handleOutsideClick);
 })
 
 // --- 입출고 등록 로직 ---
 const logForm = ref({ type: '출고', date: new Date().toISOString().split('T')[0], brand: 'Kybun', modelName: '', size: 240, quantity: 1 })
 const resetLogForm = () => { logForm.value = { type: '출고', date: new Date().toISOString().split('T')[0], brand: 'Kybun', modelName: '', size: 240, quantity: 1 } }
+const formattedFormDate = computed(() => {
+  if (!logForm.value.date) return '';
+  const d = new Date(logForm.value.date);
+  const yy = String(d.getFullYear()).slice(-2);
+  const mm = String(d.getMonth() + 1).padStart(2, '0');
+  const dd = String(d.getDate()).padStart(2, '0');
+  const day = weekDays[d.getDay()];
+  return `${yy}-${mm}-${dd}(${day})`;
+});
 const availableModelsForForm = computed(() => inventory.value.filter(s => s.brand === logForm.value.brand && !deletedModels.value.includes(s.modelName)).map(s => s.modelName).sort())
 
 const submitLog = async () => {
@@ -867,7 +798,11 @@ const submitLog = async () => {
   if (!error && data && data[0]) { 
     const exists = transactionLogs.value.find(l => l.id === data[0].id)
     if(!exists) transactionLogs.value.unshift(data[0]) 
-    localStorage.setItem('cached_transactions', JSON.stringify(transactionLogs.value))
+    
+    // 🔥 새 등록건이 화면에도 바로 뜨도록 처리
+    const uiExists = uiLogs.value.find(l => l.id === data[0].id)
+    if(!uiExists) uiLogs.value.unshift(data[0])
+
     calculateInventory() 
     logForm.value.quantity = 1 
   } else {
@@ -875,47 +810,59 @@ const submitLog = async () => {
   }
 }
 
-const deleteLog = async (log) => {
-  if (!confirm('영구 삭제하시겠습니까? 데이터베이스에서도 삭제됩니다.')) return
-  const { error } = await supabase.from('logs').delete().eq('id', log.id)
-  if (!error) { 
-    transactionLogs.value = transactionLogs.value.filter(l => l.id !== log.id)
-    localStorage.setItem('cached_transactions', JSON.stringify(transactionLogs.value))
-    calculateInventory() 
-  } else {
-    alert('삭제 실패: ' + error.message)
-  }
-}
-
-// 🔥 다이렉트 재고 수정 (엑셀 복사/붙여넣기 지원)
+// 🔥 다이렉트 재고 수정 (엑셀 복사/붙여넣기 및 충돌 방지 자물쇠)
 const isEditMode = ref(false)
+const isSavingEdit = ref(false) 
 
 const toggleEditMode = async () => {
-  if (isEditMode.value) {
-    const payloads = []
-    const today = new Date().toISOString().split('T')[0]
-    
-    inventory.value.forEach(shoe => {
-      if(deletedModels.value.includes(shoe.modelName)) return;
+  if (isSavingEdit.value) return; 
 
-      availableSizes.forEach(size => {
-        const originalVal = shoe.sizes[size] || 0
-        const draftValRaw = shoe.draftSizes[size]
-        const newVal = draftValRaw === '' || draftValRaw === null ? 0 : Number(draftValRaw)
-        const diff = newVal - originalVal
-        
-        if (diff !== 0) {
-          payloads.push({ date: today, type: '재고조정', brand: shoe.brand, modelName: shoe.modelName, size: size, quantity: diff })
-        }
+  if (isEditMode.value) {
+    isSavingEdit.value = true;
+    try {
+      const payloads = []
+      const today = new Date().toISOString().split('T')[0]
+      
+      inventory.value.forEach(shoe => {
+        if(deletedModels.value.includes(shoe.modelName)) return;
+
+        availableSizes.forEach(size => {
+          const originalVal = shoe.sizes[size] || 0
+          const draftValRaw = shoe.draftSizes[size]
+          
+          if (draftValRaw === '') {
+            if (originalVal !== 0 || shoe.history[size]) {
+              payloads.push({ date: today, type: '재고초기화', brand: shoe.brand, modelName: shoe.modelName, size: size, quantity: 0 })
+            }
+          } 
+          else {
+            const newVal = Number(draftValRaw)
+            if (!isNaN(newVal)) {
+              const diff = newVal - originalVal
+              if (diff !== 0) {
+                payloads.push({ date: today, type: '재고조정', brand: shoe.brand, modelName: shoe.modelName, size: size, quantity: diff })
+              }
+            }
+          }
+        })
       })
-    })
-    
-    if (payloads.length > 0) {
-      const { error } = await supabase.from('logs').insert(payloads)
-      if (error) { alert('수정 내역 저장 실패: ' + error.message); return; }
+      
+      if (payloads.length > 0) {
+        const { data, error } = await supabase.from('logs').insert(payloads).select()
+        if (error) { alert('수정 내역 저장 실패: ' + error.message); return; }
+        
+        if (data && data.length > 0) {
+          data.forEach(newLog => {
+            const exists = transactionLogs.value.find(l => l.id === newLog.id)
+            if (!exists) transactionLogs.value.unshift(newLog)
+          })
+          calculateInventory()
+        }
+      }
+      isEditMode.value = false
+    } finally {
+      isSavingEdit.value = false;
     }
-    
-    isEditMode.value = false
   } else {
     inventory.value.forEach(shoe => {
       availableSizes.forEach(sz => {
@@ -925,24 +872,21 @@ const toggleEditMode = async () => {
     isEditMode.value = true
   }
 }
-
 const isDraftChanged = (shoe, size) => {
   const original = shoe.sizes[size] || 0
   const draftRaw = shoe.draftSizes[size]
-  const current = draftRaw === '' || draftRaw === null ? 0 : Number(draftRaw)
-  return original !== current
+  if (draftRaw === '') return original !== 0 || shoe.history[size] === true;
+  return original !== Number(draftRaw)
 }
 
 const getInputClass = (shoe, size) => {
   if (isDraftChanged(shoe, size)) return 'text-indigo-700 bg-indigo-50 font-black ring-2 ring-indigo-400'
-  
   const draftRaw = shoe.draftSizes[size]
-  const current = draftRaw === '' || draftRaw === null ? 0 : Number(draftRaw)
-  
+  if (draftRaw === '') return 'text-transparent focus:text-gray-400'
+  const current = Number(draftRaw)
   if (current > 0) return 'text-black dark:text-white font-black'
   if (current < 0) return 'text-red-600 font-black'
   if (current === 0 && shoe.history?.[size]) return 'text-[#5c7f59] font-black'
-  
   return 'text-transparent focus:text-gray-400'
 }
 
@@ -968,20 +912,18 @@ const handlePaste = (e, startRowIdx, startColIdx) => {
   if (!pasteData) return;
 
   const rows = pasteData.split(/\r?\n/);
-  
   for (let i = 0; i < rows.length; i++) {
     if (rows[i] === '' && i === rows.length - 1) continue; 
-    
     const cols = rows[i].split('\t');
     const targetShoe = sortedAndFilteredInventory.value[startRowIdx + i];
     if (!targetShoe) break; 
-    
     for (let j = 0; j < cols.length; j++) {
       const targetSize = availableSizes[startColIdx + j];
       if (!targetSize) break; 
-      
       const valStr = cols[j].trim().replace(/,/g, ''); 
-      if (valStr !== '') {
+      if (valStr === '') {
+        targetShoe.draftSizes[targetSize] = '';
+      } else {
         const val = Number(valStr);
         if (!isNaN(val)) {
           targetShoe.draftSizes[targetSize] = val;
@@ -989,6 +931,36 @@ const handlePaste = (e, startRowIdx, startColIdx) => {
       }
     }
   }
+}
+
+const showModal = ref(false), newShoe = ref({ brand: 'Kybun', modelName: '' })
+const addShoe = async () => { 
+  if (!newShoe.value.modelName) return; 
+  
+  const delIdx = deletedModels.value.indexOf(newShoe.value.modelName)
+  if (delIdx > -1) {
+    deletedModels.value.splice(delIdx, 1)
+    localStorage.setItem('deleted_models', JSON.stringify(deletedModels.value))
+    showModal.value = false;
+    return;
+  }
+
+  const payload = { brand: newShoe.value.brand, model_name: newShoe.value.modelName, api_slug: '' }
+  const { data, error } = await supabase.from('models').insert([payload]).select()
+  
+  if (!error && data && data[0]) {
+    const exists = inventory.value.find(s => s.id === data[0].id)
+    if (!exists) {
+      inventory.value.push({ 
+        id: data[0].id, brand: data[0].brand, modelName: data[0].model_name, sizes: createEmptySizes(), draftSizes: createEmptySizes(), history: {}, hqStockData: null 
+      });
+    }
+    alert(`[${data[0].model_name}] 추가 완료!`);
+  } else {
+    alert('모델 추가 실패: ' + (error?.message || '오류 발생'));
+  }
+  showModal.value = false; 
+  newShoe.value.modelName = '';
 }
 
 // --- B2B 실시간 연동 ---
@@ -1038,7 +1010,7 @@ const getHQStockTextColor = (n) => {
 }
 
 // ==========================================
-// 📈 판매 현황 로직 (브랜드 매칭 도우미 포함)
+// 📈 판매 현황 및 AS
 // ==========================================
 const getStrictBrand = (log) => {
   if (['Kybun', 'kybun', '기분'].includes(log.brand)) return 'Kybun';
@@ -1047,15 +1019,18 @@ const getStrictBrand = (log) => {
   return shoe ? shoe.brand : 'Kybun'; 
 }
 
-const currentSalesMonth = ref(new Date().toISOString().slice(0, 7))
+// 수정할 코드
+const getLocalMonth = () => {
+  const d = new Date();
+  return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}`;
+};
+const currentSalesMonth = ref(getLocalMonth())
 
-// 1. 현재 월 기본 통계
 const monthlyLogs = computed(() => transactionLogs.value.filter(l => l.type === '출고' && String(l.date).startsWith(currentSalesMonth.value)))
 const monthlyTotalQuantity = computed(() => monthlyLogs.value.reduce((s, l) => s + Number(l.quantity), 0))
 const monthlyKybunQuantity = computed(() => monthlyLogs.value.filter(l => getStrictBrand(l) === 'Kybun').reduce((s, l) => s + Number(l.quantity), 0))
 const monthlyJoyaQuantity = computed(() => monthlyLogs.value.filter(l => getStrictBrand(l) === 'Joya').reduce((s, l) => s + Number(l.quantity), 0))
 
-// 2. 베스트셀러 집계
 const monthlyBestSellers = computed(() => {
   const m = {}; 
   monthlyLogs.value.forEach(l => {
@@ -1065,7 +1040,6 @@ const monthlyBestSellers = computed(() => {
   return Object.values(m).sort((a, b) => b.quantity - a.quantity)
 })
 
-// 3. 전년 동월(YoY) 비교
 const lastYearMonth = computed(() => {
   const [year, month] = currentSalesMonth.value.split('-');
   return `${Number(year) - 1}-${month}`;
@@ -1077,7 +1051,6 @@ const lastYearJoyaQuantity = computed(() => lastYearLogs.value.filter(l => getSt
 
 const getYoYDiff = (current, last) => current - last;
 
-// 4. 월별 판매 차트 (해당 연도 1~12월)
 const graphBrandFilter = ref('All'); 
 const yearlyGraphData = computed(() => {
   const currentYear = currentSalesMonth.value.split('-')[0];
@@ -1106,40 +1079,21 @@ const yearlyGraphData = computed(() => {
   }));
 });
 
-// --- AS 현황 로직 (Supabase 연동 완료) ---
 const asRecords = ref([])
 const asForm = ref({ receiveDate: new Date().toISOString().split('T')[0], customer: '', phone: '', modelName: '', reason: '', fee: '', address: '' })
 const resetAsForm = () => asForm.value = { receiveDate: new Date().toISOString().split('T')[0], customer: '', phone: '', modelName: '', reason: '', fee: '', address: '' }
 
-// Supabase에서 AS 데이터 불러오기
 const fetchAsRecords = async () => {
   const { data, error } = await supabase.from('as_records').select('*').order('id', { ascending: false })
   if (!error && data) asRecords.value = data
 }
 
-// 초기 로딩 시 AS 데이터 불러오기 추가
-onMounted(() => {
-  fetchTransactionLogs()
-  fetchAsRecords() // 추가됨
-  
-  // (기존 logs 채널 구독 코드는 그대로 유지)
-  supabase.channel('public:logs').on('postgres_changes', { event: '*', schema: 'public', table: 'logs' }, (payload) => {
-    // ... 생략 ...
-  }).subscribe()
-})
-
 const submitAs = async () => { 
   if (!asForm.value.customer) return alert("고객명을 입력하세요."); 
-  
   const payload = { ...asForm.value, isCompleted: false, releaseDate: null }
   const { data, error } = await supabase.from('as_records').insert([payload]).select()
-  
-  if (!error && data) {
-    asRecords.value.unshift(data[0])
-    resetAsForm()
-  } else {
-    alert("AS 등록 실패: " + error?.message)
-  }
+  if (!error && data) { asRecords.value.unshift(data[0]); resetAsForm(); }
+  else { alert("AS 등록 실패: " + error?.message) }
 }
 
 const deleteAs = async (id) => {
@@ -1151,15 +1105,9 @@ const deleteAs = async (id) => {
 const toggleAsComplete = async (as) => { 
   const newStatus = !as.isCompleted;
   const newReleaseDate = newStatus ? new Date().toISOString().split('T')[0] : null;
-  
   const { error } = await supabase.from('as_records').update({ isCompleted: newStatus, releaseDate: newReleaseDate }).eq('id', as.id)
-  
-  if(!error) {
-    as.isCompleted = newStatus;
-    as.releaseDate = newReleaseDate;
-  } else {
-    alert("상태 변경 실패: " + error.message)
-  }
+  if(!error) { as.isCompleted = newStatus; as.releaseDate = newReleaseDate; }
+  else { alert("상태 변경 실패: " + error.message) }
 }
 
 const getTotalStock = (s) => Object.values(s).reduce((a, b) => a + b, 0)
@@ -1167,19 +1115,6 @@ const totalKybunStock = computed(() => inventory.value.filter(s => s.brand === '
 const totalJoyaStock = computed(() => inventory.value.filter(s => s.brand === 'Joya').reduce((sum, s) => sum + getTotalStock(s.sizes), 0))
 const getFormattedDate = (d) => { if(!d) return ''; const date = new Date(d); return `${String(date.getFullYear()).slice(-2)}-${String(date.getMonth()+1).padStart(2,'0')}-${String(date.getDate()).padStart(2,'0')}(${weekDays[date.getDay()]})` }
 const getRowBg = (t) => t === '출고' ? 'bg-[#FABCBC] shadow-sm' : t === '입고' ? 'bg-[#C5E1FF] shadow-sm' : t === '재고조정' ? 'bg-[#E9D5FF] shadow-sm' : 'bg-[#FFF2CC] shadow-sm'
-
-const showModal = ref(false), newShoe = ref({ brand: 'Kybun', modelName: '' })
-const addShoe = () => { 
-  if (!newShoe.value.modelName) return; 
-  const delIdx = deletedModels.value.indexOf(newShoe.value.modelName)
-  if (delIdx > -1) {
-    deletedModels.value.splice(delIdx, 1)
-    localStorage.setItem('deleted_models', JSON.stringify(deletedModels.value))
-  } else {
-    inventory.value.push({ id: Date.now(), brand: newShoe.value.brand, modelName: newShoe.value.modelName, sizes: createEmptySizes(), draftSizes: createEmptySizes(), history: {}, hqStockData: null }); 
-  }
-  showModal.value = false; 
-}
 </script>
 
 <style>
