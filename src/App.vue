@@ -87,18 +87,32 @@
                     </select>
                   </div>
                   
-                  <div class="grid grid-cols-2 gap-4">
+<div class="grid grid-cols-2 gap-4">
                     <div class="space-y-1">
                       <label class="block text-[11px] font-black text-gray-400">사이즈</label>
                       <select v-model="logForm.size" class="w-full px-3 py-2 border-2 border-indigo-100 rounded-xl text-indigo-700 font-black bg-indigo-50/30 text-sm h-[46px] outline-none">
                         <option v-for="size in availableSizes" :key="size" :value="size">{{ size }}</option>
                       </select>
                     </div>
+                    
                     <div class="space-y-1">
                       <label class="block text-[11px] font-black text-gray-400">수량</label>
-                      <div class="relative">
-                        <input v-model="logForm.quantity" type="number" min="1" class="w-full px-3 py-2 border-2 border-gray-100 rounded-xl font-black text-right pr-9 bg-white text-sm h-[46px] outline-none">
-                        <span class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 font-bold text-[11px]">족</span>
+                      <div class="flex h-[46px] border-2 border-gray-100 rounded-xl bg-white overflow-hidden transition-all focus-within:border-indigo-300 shadow-sm">
+                        <button @click="logForm.quantity > 1 ? logForm.quantity-- : null" 
+                                class="w-10 flex items-center justify-center text-gray-400 hover:bg-gray-100 hover:text-indigo-600 active:bg-gray-200 font-black text-xl transition-colors select-none cursor-pointer border-r border-gray-50 bg-gray-50">
+                          -
+                        </button>
+                        
+                        <div class="flex-1 relative">
+                          <input v-model="logForm.quantity" type="number" min="1" 
+                                 class="w-full h-full text-center font-black text-sm outline-none bg-transparent pr-4">
+                          <span class="absolute right-2 top-1/2 -translate-y-1/2 text-gray-400 font-bold text-[11px] pointer-events-none">족</span>
+                        </div>
+                        
+                        <button @click="logForm.quantity++" 
+                                class="w-10 flex items-center justify-center text-gray-400 hover:bg-gray-100 hover:text-indigo-600 active:bg-gray-200 font-black text-xl transition-colors select-none cursor-pointer border-l border-gray-50 bg-gray-50">
+                          +
+                        </button>
                       </div>
                     </div>
                   </div>
@@ -135,56 +149,56 @@
               </div>
             </div>
             
-            <div class="overflow-x-auto pb-4">
-              <table class="w-full lg:min-w-[700px] text-center text-[11px] sm:text-xs whitespace-nowrap border-separate" style="border-spacing: 0 4px;">
+<div class="overflow-x-auto pb-4">
+              <table class="w-full lg:min-w-[700px] text-center text-[18px] sm:text-[19px] whitespace-nowrap border-separate" style="border-spacing: 0 6px;">
                 <thead class="text-gray-400">
                   <tr>
-                    <th class="font-bold pb-1 text-left pl-2 sm:pl-6">
+                    <th class="font-bold pb-1.5 text-left pl-2 sm:pl-6">
                       <div class="flex items-center gap-1.5">
                         <span>날짜</span>
-                        <div class="relative w-4 h-4 cursor-pointer text-gray-400 hover:text-indigo-500 transition-colors" title="날짜로 검색">
+                        <div class="relative w-5 h-5 cursor-pointer text-gray-400 hover:text-indigo-500 transition-colors" title="날짜로 검색">
                           📅
                           <input type="date" v-model="filterDate" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer" />
                         </div>
                       </div>
                     </th>
-                    <th class="font-bold pb-1">구분</th>
-                    <th class="font-bold pb-1">브랜드</th>
-                    <th class="font-bold pb-1 text-left pl-2">상품명</th>
-                    <th class="font-bold pb-1">사이즈</th>
-                    <th class="font-bold pb-1 pr-2 sm:pr-6 text-right">수량</th>
+                    <th class="font-bold pb-1.5">구분</th>
+                    <th class="font-bold pb-1.5">브랜드</th>
+                    <th class="font-bold pb-1.5 text-left pl-2">상품명</th>
+                    <th class="font-bold pb-1.5">사이즈</th>
+                    <th class="font-bold pb-1.5 pr-2 sm:pr-6 text-right">수량</th>
                   </tr>
                 </thead>
                 <TransitionGroup tag="tbody" name="list">
-                  <tr v-if="isFetchingLogs && displayTransactionLogs.length === 0" key="loading-row"><td colspan="6" class="px-2 py-4 text-center text-indigo-400 font-bold bg-white rounded-xl shadow-sm border border-gray-100">데이터를 불러오는 중입니다...</td></tr>
-                  <tr v-else-if="displayTransactionLogs.length === 0" key="empty-row"><td colspan="6" class="px-2 py-4 text-center text-gray-400 bg-white rounded-xl shadow-sm border border-gray-100">조건에 맞는 내역이 없습니다.</td></tr>
+                  <tr v-if="isFetchingLogs && displayTransactionLogs.length === 0" key="loading-row"><td colspan="6" class="px-2 py-2.5 text-center text-indigo-400 font-bold bg-white rounded-xl shadow-sm border border-gray-100">데이터를 불러오는 중입니다...</td></tr>
+                  <tr v-else-if="displayTransactionLogs.length === 0" key="empty-row"><td colspan="6" class="px-2 py-2.5 text-center text-gray-400 bg-white rounded-xl shadow-sm border border-gray-100">조건에 맞는 내역이 없습니다.</td></tr>
                   
                   <tr v-for="log in displayTransactionLogs" :key="log.id" 
                       @click="selectedLogId = selectedLogId === log.id ? null : log.id"
                       class="log-row cursor-pointer transition-all duration-200 select-none"
                       :class="selectedLogId === log.id ? 'scale-[1.01] z-10 relative drop-shadow-md' : 'hover:scale-[1.005]'">
                     
-                    <td class="px-2 sm:px-6 py-2 sm:py-3 rounded-l-lg transition-colors font-bold text-left" 
+                    <td class="px-2 sm:px-6 py-1.5 sm:py-2.5 rounded-l-lg transition-colors font-bold text-left" 
                         :class="selectedLogId === log.id ? 'bg-indigo-600 text-white' : getRowBg(log.type)">
                         {{ getFormattedDate(log.date) }}
                     </td>
-                    <td class="px-1 py-2 sm:py-3 font-bold transition-colors" 
+                    <td class="px-1 py-1.5 sm:py-2.5 font-bold transition-colors" 
                         :class="selectedLogId === log.id ? 'bg-indigo-600 text-white' : getRowBg(log.type)">
                         {{ log.type }}
                     </td>
-                    <td class="px-1 py-2 sm:py-3 transition-colors font-bold" 
+                    <td class="px-1 py-1.5 sm:py-2.5 transition-colors font-bold" 
                         :class="selectedLogId === log.id ? 'bg-indigo-600 text-indigo-100' : getRowBg(log.type)">
                         {{ log.brand === 'Kybun' ? '기분' : (log.brand === 'Joya' ? '조야' : log.brand) }}
                     </td>
-                    <td class="px-2 py-2 sm:py-3 font-bold transition-colors text-left" 
+                    <td class="px-2 py-1.5 sm:py-2.5 font-bold transition-colors text-left" 
                         :class="selectedLogId === log.id ? 'bg-indigo-600 text-white' : getRowBg(log.type)">
                         {{ log.modelName }}
                     </td>
-                    <td class="px-1 py-2 sm:py-3 font-bold transition-colors" 
+                    <td class="px-1 py-1.5 sm:py-2.5 font-bold transition-colors" 
                         :class="selectedLogId === log.id ? 'bg-indigo-600 text-white' : getRowBg(log.type)">
                         {{ log.size }}
                     </td>
-                    <td class="px-2 sm:px-6 py-2 sm:py-3 font-black transition-colors rounded-r-lg text-right" 
+                    <td class="px-2 sm:px-6 py-1.5 sm:py-2.5 font-black transition-colors rounded-r-lg text-right" 
                         :class="selectedLogId === log.id ? 'bg-indigo-600 text-yellow-300' : getRowBg(log.type)">
                       {{ log.type === '재고조정' && log.quantity > 0 ? '+' : ''}}{{ log.quantity }}
                     </td>
