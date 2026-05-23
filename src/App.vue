@@ -602,7 +602,7 @@ const HQ_API_TOKEN = import.meta.env.VITE_HQ_API_TOKEN;
 
 const isAuthenticated = ref(false)
 const pinPassword = ref('')
-const handleLogin = () => { if (pinPassword.value === '123456') isAuthenticated.value = true; else alert('비밀번호 불일치'); pinPassword.value = ''; }
+const handleLogin = () => { if (pinPassword.value === '245824') isAuthenticated.value = true; else alert('비밀번호 불일치'); pinPassword.value = ''; }
 
 const isDark = ref(false)
 const toggleDarkMode = () => { isDark.value = !isDark.value; document.documentElement.classList.toggle('dark', isDark.value); }
@@ -758,7 +758,7 @@ const fetchTransactionLogs = async () => {
 
 const handleSyncWithAuth = () => {
   const passwordCheck = prompt('동기화를 진행하려면 관리자 비밀번호 6자리를 입력해주세요.');
-  if (passwordCheck === '123456') {
+  if (passwordCheck === '245824') {
     fetchTransactionLogs();
   } else if (passwordCheck !== null) {
     alert('비밀번호가 일치하지 않습니다.');
