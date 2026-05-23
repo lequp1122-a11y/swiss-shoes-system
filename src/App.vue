@@ -21,7 +21,7 @@
           </button>
         </div>
         
-  n<div class="flex space-x-1 sm:space-x-2 bg-gray-100 p-1.5 rounded-xl shrink-0 transition-colors overflow-x-auto w-full lg:w-auto justify-start sm:justify-center">
+  <div class="flex space-x-1 sm:space-x-2 bg-gray-100 p-1.5 rounded-xl shrink-0 transition-colors overflow-x-auto w-full lg:w-auto justify-start sm:justify-center">
           <button @click="currentTab = 'log'" class="flex-1 lg:flex-none px-4 sm:px-6 py-2.5 rounded-lg text-[16px] sm:text-[18px] font-black transition-colors whitespace-nowrap" :class="currentTab === 'log' ? 'bg-white text-indigo-600 shadow-sm' : 'text-gray-500 hover:text-gray-700'">📝 입출고</button>
           <button @click="currentTab = 'status'" class="flex-1 lg:flex-none px-4 sm:px-6 py-2.5 rounded-lg text-[16px] sm:text-[18px] font-black transition-colors whitespace-nowrap" :class="currentTab === 'status' ? 'bg-white text-indigo-600 shadow-sm' : 'text-gray-500 hover:text-gray-700'">📊 재고</button>
           <button @click="currentTab = 'sales'" class="flex-1 lg:flex-none px-4 sm:px-6 py-2.5 rounded-lg text-[16px] sm:text-[18px] font-black transition-colors whitespace-nowrap" :class="currentTab === 'sales' ? 'bg-white text-indigo-600 shadow-sm' : 'text-gray-500 hover:text-gray-700'">📈 판매</button>
@@ -246,11 +246,6 @@
     </div>
   </div>
     
-    <div class="w-full md:w-auto h-[46px]">
-      <button @click="showModal = true" class="w-full h-full bg-indigo-600 text-white px-5 rounded-xl font-black shadow-md hover:bg-indigo-700 transition">+ 새 모델 추가</button>
-    </div>
-  </div>
-
   <div class="pt-4">
     
 <!-- 브랜드 필터 (1.8배 확대) 및 액션 버튼 그룹 -->
