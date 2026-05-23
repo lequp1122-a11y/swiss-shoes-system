@@ -21,11 +21,11 @@
           </button>
         </div>
         
-        <div class="flex space-x-1 bg-gray-100 p-1 rounded-lg shrink-0 transition-colors">
-          <button @click="currentTab = 'log'" class="px-4 py-2 rounded-md text-sm font-bold transition-colors" :class="currentTab === 'log' ? 'bg-white text-indigo-600 shadow-sm' : 'text-gray-500 hover:text-gray-700'">📝 입출고 등록</button>
-          <button @click="currentTab = 'status'" class="px-4 py-2 rounded-md text-sm font-bold transition-colors" :class="currentTab === 'status' ? 'bg-white text-indigo-600 shadow-sm' : 'text-gray-500 hover:text-gray-700'">📊 재고 현황</button>
-          <button @click="currentTab = 'sales'" class="px-4 py-2 rounded-md text-sm font-bold transition-colors" :class="currentTab === 'sales' ? 'bg-white text-indigo-600 shadow-sm' : 'text-gray-500 hover:text-gray-700'">📈 판매 현황</button>
-          <button @click="currentTab = 'as'" class="px-4 py-2 rounded-md text-sm font-bold transition-colors" :class="currentTab === 'as' ? 'bg-white text-indigo-600 shadow-sm' : 'text-gray-500 hover:text-gray-700'">🛠️ AS 현황</button>
+  n<div class="flex space-x-1 sm:space-x-2 bg-gray-100 p-1.5 rounded-xl shrink-0 transition-colors overflow-x-auto w-full lg:w-auto justify-start sm:justify-center">
+          <button @click="currentTab = 'log'" class="flex-1 lg:flex-none px-4 sm:px-6 py-2.5 rounded-lg text-[16px] sm:text-[18px] font-black transition-colors whitespace-nowrap" :class="currentTab === 'log' ? 'bg-white text-indigo-600 shadow-sm' : 'text-gray-500 hover:text-gray-700'">📝 입출고</button>
+          <button @click="currentTab = 'status'" class="flex-1 lg:flex-none px-4 sm:px-6 py-2.5 rounded-lg text-[16px] sm:text-[18px] font-black transition-colors whitespace-nowrap" :class="currentTab === 'status' ? 'bg-white text-indigo-600 shadow-sm' : 'text-gray-500 hover:text-gray-700'">📊 재고</button>
+          <button @click="currentTab = 'sales'" class="flex-1 lg:flex-none px-4 sm:px-6 py-2.5 rounded-lg text-[16px] sm:text-[18px] font-black transition-colors whitespace-nowrap" :class="currentTab === 'sales' ? 'bg-white text-indigo-600 shadow-sm' : 'text-gray-500 hover:text-gray-700'">📈 판매</button>
+          <button @click="currentTab = 'as'" class="flex-1 lg:flex-none px-4 sm:px-6 py-2.5 rounded-lg text-[16px] sm:text-[18px] font-black transition-colors whitespace-nowrap" :class="currentTab === 'as' ? 'bg-white text-indigo-600 shadow-sm' : 'text-gray-500 hover:text-gray-700'">🛠️ AS</button>
         </div>
 
         <div class="flex flex-wrap justify-center items-center gap-3">
@@ -233,12 +233,14 @@
 
 <div v-if="currentTab === 'status'" class="space-y-4">
   
-  <div class="flex flex-col md:flex-row gap-4 items-stretch md:items-end bg-white p-4 rounded-2xl shadow-sm sticky top-[80px] z-20 border-2 border-gray-100 transition-colors">
-    <div class="w-full md:flex-1 space-y-1.5 relative">
+<!-- 검색바 단독 배치 (새 모델 추가 버튼 제거됨) -->
+  <div class="flex items-center bg-white p-4 rounded-2xl shadow-sm sticky top-[80px] z-20 border-2 border-gray-100 transition-colors">
+    <div class="w-full space-y-1.5 relative">
       <label class="text-xs font-black text-gray-400">모델 검색</label>
       <input v-model="searchQuery" type="text" placeholder="검색어를 입력하세요" class="w-full px-4 py-2.5 rounded-xl border border-gray-200 bg-gray-50 font-bold pr-10 outline-none focus:ring-2 focus:ring-indigo-500 transition-all">
       <button v-if="searchQuery" @click="searchQuery = ''" class="absolute right-3 top-[34px] w-5 h-5 flex items-center justify-center bg-gray-300 hover:bg-gray-400 text-white rounded-full text-xs font-bold transition-colors">X</button>
     </div>
+  </div>
     
     <div class="w-full md:w-auto h-[46px]">
       <button @click="showModal = true" class="w-full h-full bg-indigo-600 text-white px-5 rounded-xl font-black shadow-md hover:bg-indigo-700 transition">+ 새 모델 추가</button>
@@ -247,28 +249,42 @@
 
   <div class="pt-4">
     
-    <div class="flex flex-wrap justify-between items-center mb-3 gap-3">
-      <div class="flex gap-2">
-        <button @click="selectedBrand = 'All'" :class="selectedBrand === 'All' ? 'bg-indigo-600 text-white shadow-md border-indigo-600' : 'bg-white text-gray-600 border-gray-200 hover:bg-gray-50'" class="px-4 py-2 rounded-xl font-bold transition-all text-[13px] border">전체</button>
-        <button @click="selectedBrand = 'Kybun'" :class="selectedBrand === 'Kybun' ? 'bg-blue-600 text-white shadow-md border-blue-600' : 'bg-white text-gray-600 border-gray-200 hover:bg-gray-50'" class="px-4 py-2 rounded-xl font-bold transition-all text-[13px] border">기분</button>
-        <button @click="selectedBrand = 'Joya'" :class="selectedBrand === 'Joya' ? 'bg-orange-600 text-white shadow-md border-orange-600' : 'bg-white text-gray-600 border-gray-200 hover:bg-gray-50'" class="px-4 py-2 rounded-xl font-bold transition-all text-[13px] border">조야</button>
+<!-- 브랜드 필터 (1.8배 확대) 및 액션 버튼 그룹 -->
+    <div class="flex flex-col xl:flex-row justify-between items-start xl:items-center mb-4 gap-4">
+      
+      <!-- 1.8배 커진 전체/기분/조야 필터 버튼 -->
+      <div class="flex gap-2 sm:gap-3 w-full xl:w-auto">
+        <button @click="selectedBrand = 'All'" :class="selectedBrand === 'All' ? 'bg-indigo-600 text-white shadow-md border-indigo-600' : 'bg-white text-gray-600 border-gray-200 hover:bg-gray-50'" class="flex-1 xl:flex-none px-4 sm:px-8 py-3.5 sm:py-4 rounded-2xl font-black transition-all text-[20px] sm:text-[24px] border-2">전체</button>
+        <button @click="selectedBrand = 'Kybun'" :class="selectedBrand === 'Kybun' ? 'bg-blue-600 text-white shadow-md border-blue-600' : 'bg-white text-gray-600 border-gray-200 hover:bg-gray-50'" class="flex-1 xl:flex-none px-4 sm:px-8 py-3.5 sm:py-4 rounded-2xl font-black transition-all text-[20px] sm:text-[24px] border-2">기분</button>
+        <button @click="selectedBrand = 'Joya'" :class="selectedBrand === 'Joya' ? 'bg-orange-600 text-white shadow-md border-orange-600' : 'bg-white text-gray-600 border-gray-200 hover:bg-gray-50'" class="flex-1 xl:flex-none px-4 sm:px-8 py-3.5 sm:py-4 rounded-2xl font-black transition-all text-[20px] sm:text-[24px] border-2">조야</button>
       </div>
 
-      <div class="flex gap-2 items-center">
+      <!-- 우측 액션 버튼 (재고수정 -> ➕ 새 모델 -> B2B 순서 배치) -->
+      <div class="flex flex-wrap gap-2 items-center w-full xl:w-auto justify-end">
+        
+        <!-- 재고 수정 -->
         <button @click="toggleEditMode" 
-                class="flex items-center gap-1.5 px-3 sm:px-4 py-2 rounded-xl font-black transition-all shadow-sm border-2"
+                class="flex items-center gap-1.5 px-3 sm:px-4 py-2 rounded-xl font-black transition-all shadow-sm border-2 h-10"
                 :class="isEditMode ? 'bg-red-500 text-white border-red-600 hover:bg-red-600' : 'bg-white text-gray-600 border-gray-200 hover:bg-gray-50'">
           <span class="text-sm">{{ isEditMode ? '💾' : '✏️' }}</span>
           <span class="text-[13px]">{{ isEditMode ? '저장' : '재고수정' }}</span>
         </button>
 
-        <button @click="toggleB2BMode" class="flex items-center gap-1.5 px-3 sm:px-4 py-2 rounded-xl font-black transition-all shadow-sm border-2"
+        <!-- 새 모델 추가 (재고수정과 B2B 사이로 이동됨) -->
+        <button @click="showModal = true" class="flex items-center gap-1.5 px-3 sm:px-4 py-2 bg-gray-800 text-white border-gray-900 hover:bg-black rounded-xl font-black transition-all shadow-sm border-2 h-10">
+          <span class="text-sm">➕</span>
+          <span class="text-[13px]">새 모델</span>
+        </button>
+
+        <!-- B2B 본사 재고 -->
+        <button @click="toggleB2BMode" class="flex items-center gap-1.5 px-3 sm:px-4 py-2 rounded-xl font-black transition-all shadow-sm border-2 h-10"
                 :class="isB2BMode ? 'bg-indigo-600 text-white border-indigo-700' : 'bg-white text-indigo-600 border-indigo-200 hover:bg-indigo-50'">
           <span v-if="isLoadingB2B" class="animate-spin text-sm">⏳</span>
           <span v-else class="text-sm">{{ isB2BMode ? '✅' : '🌐' }}</span>
           <span class="text-[13px] hidden sm:inline">{{ isB2BMode ? (isLoadingB2B ? 'B2B 갱신 중...' : 'B2B 켜짐') : 'B2B 재고' }}</span>
           <span class="text-[13px] sm:hidden">{{ isB2BMode ? 'B2B' : 'B2B' }}</span>
         </button>
+
       </div>
     </div>
 
