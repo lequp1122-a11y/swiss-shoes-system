@@ -42,8 +42,8 @@
       
 <div v-if="currentTab === 'log'" class="space-y-8 max-w-6xl mx-auto w-full">
           
-          <div class="bg-white rounded-3xl shadow-md border-2 border-gray-100 relative overflow-hidden transition-colors">
-            <div class="absolute top-0 left-0 w-full h-2 transition-colors duration-300" :class="{'bg-[#FABCBC]': logForm.type==='출고', 'bg-[#C5E1FF]': logForm.type==='입고', 'bg-[#FFF2CC]': logForm.type==='양도'}"></div>
+          <div class="bg-white rounded-3xl shadow-md border-2 border-gray-100 relative transition-colors">
+            <div class="absolute top-0 left-0 w-full h-2 rounded-t-3xl transition-colors duration-300" :class="{'bg-[#FABCBC]': logForm.type==='출고', 'bg-[#C5E1FF]': logForm.type==='입고', 'bg-[#FFF2CC]': logForm.type==='양도'}"></div>
             <div class="p-5 sm:p-7">
               
               <div class="flex flex-col lg:flex-row gap-4 lg:gap-3 items-stretch">
@@ -88,7 +88,7 @@
                   </div>
                   
 <div class="grid grid-cols-2 gap-4">
-                      <div class="space-y-1 relative size-popup-container">
+<div class="space-y-1 relative size-popup-container">
                       <label class="block text-[11px] font-black text-gray-400">사이즈</label>
                       
                       <select v-model="logForm.size" class="md:hidden w-full px-3 py-2 border-2 border-indigo-100 rounded-xl text-indigo-700 font-black bg-indigo-50/30 text-sm h-[46px] outline-none">
@@ -103,11 +103,11 @@
                         </button>
 
                         <div v-if="isSizePopupOpen" 
-                             class="absolute left-0 top-[70px] z-50 w-[280px] p-3 bg-white border-2 border-indigo-100 rounded-2xl shadow-2xl origin-top-left transition-all">
-                          <div class="grid grid-cols-4 gap-2">
+                             class="absolute left-0 top-[55px] z-[9999] w-[420px] p-4 bg-white border-2 border-indigo-100 rounded-2xl shadow-2xl origin-top-left transition-all">
+                          <div class="grid grid-cols-6 gap-2">
                             <button v-for="size in availableSizes" :key="'popup-'+size"
                                     @click="selectSize(size)"
-                                    class="py-2 rounded-xl font-black text-[13px] transition-all"
+                                    class="py-2.5 rounded-xl font-black text-[13px] transition-all"
                                     :class="logForm.size === size ? 'bg-indigo-600 text-white shadow-md scale-105' : 'bg-gray-50 text-gray-500 hover:bg-indigo-50 hover:text-indigo-600 border border-gray-100 hover:border-indigo-200'">
                               {{ size }}
                             </button>
