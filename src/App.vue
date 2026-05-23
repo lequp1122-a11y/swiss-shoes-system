@@ -96,19 +96,23 @@
                       </select>
 
                       <div class="hidden md:block">
+                        <!-- 사이즈 선택 버튼 (팝업 여는 버튼) -->
                         <button @click.stop="isSizePopupOpen = !isSizePopupOpen" 
                                 class="w-full px-3 py-2 border-2 border-indigo-100 rounded-xl text-indigo-700 font-black bg-indigo-50/30 text-sm h-[46px] outline-none text-left flex justify-between items-center transition-all hover:bg-indigo-50">
                           <span>{{ logForm.size }}</span>
                           <span class="text-[10px] text-indigo-400 font-bold">{{ isSizePopupOpen ? '▲' : '▼' }}</span>
                         </button>
 
+                        <!-- 1.7배 커진 사이즈 선택 팝업 -->
                         <div v-if="isSizePopupOpen" 
-                             class="absolute left-0 top-[55px] z-[9999] w-[420px] p-4 bg-white border-2 border-indigo-100 rounded-2xl shadow-2xl origin-top-left transition-all">
-                          <div class="grid grid-cols-6 gap-2">
+                             class="absolute left-0 top-[55px] z-[9999] w-[710px] p-6 bg-white border-2 border-indigo-200 rounded-3xl shadow-[0_20px_50px_rgba(0,0,0,0.15)] origin-top-left transition-all">
+                          
+                          <!-- 버튼 간격 확대 (gap-2 -> gap-3) -->
+                          <div class="grid grid-cols-6 gap-3">
                             <button v-for="size in availableSizes" :key="'popup-'+size"
                                     @click="selectSize(size)"
-                                    class="py-2.5 rounded-xl font-black text-[13px] transition-all"
-                                    :class="logForm.size === size ? 'bg-indigo-600 text-white shadow-md scale-105' : 'bg-gray-50 text-gray-500 hover:bg-indigo-50 hover:text-indigo-600 border border-gray-100 hover:border-indigo-200'">
+                                    class="py-4 rounded-2xl font-black text-[22px] transition-all"
+                                    :class="logForm.size === size ? 'bg-indigo-600 text-white shadow-lg scale-105' : 'bg-gray-50 text-gray-500 hover:bg-indigo-50 hover:text-indigo-600 border border-gray-100 hover:border-indigo-300'">
                               {{ size }}
                             </button>
                           </div>
