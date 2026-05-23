@@ -143,20 +143,20 @@
                         class="action-btn text-[11px] font-bold px-3 py-1.5 rounded-lg border transition-all flex items-center gap-1">
                   🗑️ 삭제
                 </button>
-                <button @click="fetchTransactionLogs(true)" class="action-btn text-[11px] font-bold text-indigo-500 hover:text-indigo-700 flex items-center gap-1 bg-white px-3 py-1.5 rounded-lg border shadow-sm active:scale-95 transition-all">
+                <button @click="handleSyncWithAuth" class="action-btn text-[11px] font-bold text-indigo-500 hover:text-indigo-700 flex items-center gap-1 bg-white px-3 py-1.5 rounded-lg border shadow-sm active:scale-95 transition-all">
                   <span :class="{'animate-spin': isFetchingLogs}">🔄</span> 동기화
                 </button>
               </div>
             </div>
             
 <div class="overflow-x-auto pb-4">
-              <table class="w-full lg:min-w-[700px] text-center text-[18px] sm:text-[19px] whitespace-nowrap border-separate" style="border-spacing: 0 6px;">
+              <table class="w-full lg:min-w-[700px] text-center text-[11px] xs:text-xs sm:text-[18px] lg:text-[19px] whitespace-nowrap border-separate" style="border-spacing: 0 4px;">
                 <thead class="text-gray-400">
                   <tr>
-                    <th class="font-bold pb-1.5 text-left pl-2 sm:pl-6">
-                      <div class="flex items-center gap-1.5">
+                    <th class="font-bold pb-1.5 text-left pl-1 sm:pl-6">
+                      <div class="flex items-center gap-1">
                         <span>날짜</span>
-                        <div class="relative w-5 h-5 cursor-pointer text-gray-400 hover:text-indigo-500 transition-colors" title="날짜로 검색">
+                        <div class="relative w-4 h-4 sm:w-5 sm:h-5 cursor-pointer text-gray-400 hover:text-indigo-500 transition-colors" title="날짜로 검색">
                           📅
                           <input type="date" v-model="filterDate" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer" />
                         </div>
@@ -164,41 +164,42 @@
                     </th>
                     <th class="font-bold pb-1.5">구분</th>
                     <th class="font-bold pb-1.5">브랜드</th>
-                    <th class="font-bold pb-1.5 text-left pl-2">상품명</th>
+                    <th class="font-bold pb-1.5 text-left pl-1">상품명</th>
                     <th class="font-bold pb-1.5">사이즈</th>
-                    <th class="font-bold pb-1.5 pr-2 sm:pr-6 text-right">수량</th>
+                    <th class="font-bold pb-1.5 pr-1 sm:pr-6 text-right">수량</th>
                   </tr>
                 </thead>
                 <TransitionGroup tag="tbody" name="list">
-                  <tr v-if="isFetchingLogs && displayTransactionLogs.length === 0" key="loading-row"><td colspan="6" class="px-2 py-2.5 text-center text-indigo-400 font-bold bg-white rounded-xl shadow-sm border border-gray-100">데이터를 불러오는 중입니다...</td></tr>
-                  <tr v-else-if="displayTransactionLogs.length === 0" key="empty-row"><td colspan="6" class="px-2 py-2.5 text-center text-gray-400 bg-white rounded-xl shadow-sm border border-gray-100">조건에 맞는 내역이 없습니다.</td></tr>
+                  <tr v-if="isFetchingLogs && displayTransactionLogs.length === 0" key="loading-row"><td colspan="6" class="px-1 py-2 text-center text-indigo-400 font-bold bg-white rounded-xl shadow-sm border border-gray-100">데이터를 불러오는 중입니다...</td></tr>
+                  <tr v-else-if="displayTransactionLogs.length === 0" key="empty-row"><td colspan="6" class="px-1 py-2 text-center text-gray-400 bg-white rounded-xl shadow-sm border border-gray-100">조건에 맞는 내역이 없습니다.</td></tr>
                   
                   <tr v-for="log in displayTransactionLogs" :key="log.id" 
                       @click="selectedLogId = selectedLogId === log.id ? null : log.id"
                       class="log-row cursor-pointer transition-all duration-200 select-none"
                       :class="selectedLogId === log.id ? 'scale-[1.01] z-10 relative drop-shadow-md' : 'hover:scale-[1.005]'">
                     
-                    <td class="px-2 sm:px-6 py-1.5 sm:py-2.5 rounded-l-lg transition-colors font-bold text-left" 
+                    <td class="px-1 sm:px-6 py-1.5 sm:py-2.5 rounded-l-lg transition-colors font-bold text-left" 
                         :class="selectedLogId === log.id ? 'bg-indigo-600 text-white' : getRowBg(log.type)">
                         {{ getFormattedDate(log.date) }}
                     </td>
-                    <td class="px-1 py-1.5 sm:py-2.5 font-bold transition-colors" 
+                    <td class="px-0.5 sm:px-1 py-1.5 sm:py-2.5 font-bold transition-colors" 
                         :class="selectedLogId === log.id ? 'bg-indigo-600 text-white' : getRowBg(log.type)">
                         {{ log.type }}
                     </td>
-                    <td class="px-1 py-1.5 sm:py-2.5 transition-colors font-bold" 
+                    <td class="px-0.5 sm:px-1 py-1.5 sm:py-2.5 transition-colors font-bold" 
                         :class="selectedLogId === log.id ? 'bg-indigo-600 text-indigo-100' : getRowBg(log.type)">
                         {{ log.brand === 'Kybun' ? '기분' : (log.brand === 'Joya' ? '조야' : log.brand) }}
                     </td>
-                    <td class="px-2 py-1.5 sm:py-2.5 font-bold transition-colors text-left" 
-                        :class="selectedLogId === log.id ? 'bg-indigo-600 text-white' : getRowBg(log.type)">
+                    <td class="px-1 sm:px-2 py-1.5 sm:py-2.5 font-bold transition-colors text-left max-w-[100px] xs:max-w-[140px] sm:max-w-none truncate" 
+                        :class="selectedLogId === log.id ? 'bg-indigo-600 text-white' : getRowBg(log.type)"
+                        :title="log.modelName">
                         {{ log.modelName }}
                     </td>
-                    <td class="px-1 py-1.5 sm:py-2.5 font-bold transition-colors" 
+                    <td class="px-0.5 sm:px-1 py-1.5 sm:py-2.5 font-bold transition-colors" 
                         :class="selectedLogId === log.id ? 'bg-indigo-600 text-white' : getRowBg(log.type)">
                         {{ log.size }}
                     </td>
-                    <td class="px-2 sm:px-6 py-1.5 sm:py-2.5 font-black transition-colors rounded-r-lg text-right" 
+                    <td class="px-1 sm:px-6 py-1.5 sm:py-2.5 font-black transition-colors rounded-r-lg text-right" 
                         :class="selectedLogId === log.id ? 'bg-indigo-600 text-yellow-300' : getRowBg(log.type)">
                       {{ log.type === '재고조정' && log.quantity > 0 ? '+' : ''}}{{ log.quantity }}
                     </td>
@@ -754,6 +755,15 @@ const fetchTransactionLogs = async () => {
 
   isFetchingLogs.value = false
 }
+
+const handleSyncWithAuth = () => {
+  const passwordCheck = prompt('동기화를 진행하려면 관리자 비밀번호 6자리를 입력해주세요.');
+  if (passwordCheck === '123456') {
+    fetchTransactionLogs();
+  } else if (passwordCheck !== null) {
+    alert('비밀번호가 일치하지 않습니다.');
+  }
+};
 
 const calculateInventory = () => {
   inventory.value.forEach(shoe => {
