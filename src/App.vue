@@ -359,36 +359,39 @@
           </div>
         </div>
 
-        <div class="flex flex-wrap gap-1.5">
+<div class="flex flex-wrap gap-2"> <!-- 간격도 1.4배를 위해 gap-2로 확대 -->
           <template v-for="(size, sizeIndex) in availableSizes" :key="`mob-size-${size}`">
             <div v-show="isEditMode || shoe.sizes[size] !== 0 || shoe.history?.[size] || (isB2BMode && shoe.hqStockData?.[size])" 
-                 class="flex flex-col border rounded-lg overflow-hidden shrink-0 min-w-[3.2rem]"
-                 :class="isEditMode && isDraftChanged(shoe, size) ? 'border-indigo-400 ring-1 ring-indigo-400' : 'border-gray-200'">
+                 class="flex flex-col border rounded-xl overflow-hidden shrink-0 min-w-[4.5rem]" 
+                 :class="isEditMode && isDraftChanged(shoe, size) ? 'border-indigo-400 ring-2 ring-indigo-400' : 'border-gray-200'">
               
-              <div class="bg-gray-100 text-[10px] font-black text-center py-0.5 text-gray-500 border-b border-gray-200"
+              <!-- 1. 사이즈 (작은 글씨 -> 큰 글씨, text-[18px]) -->
+              <div class="bg-gray-100 text-[18px] font-black text-center py-1 text-gray-700 border-b border-gray-200 tracking-tight"
                    :class="{ 'bg-indigo-600 text-white border-indigo-600': sortBySize === size }">
                 {{ size }}
               </div>
               
-              <div class="p-1 flex flex-col items-center justify-center bg-white h-7"
+              <!-- 2. 재고 수량 (큰 글씨 -> 작은 글씨, text-[14px], 높이 h-10으로 확대) -->
+              <div class="p-1.5 flex flex-col items-center justify-center bg-white h-10"
                    :class="{'bg-indigo-50': isEditMode && isDraftChanged(shoe, size)}">
                 
                 <input v-if="isEditMode"
                        v-model="shoe.draftSizes[size]"
                        type="text"
-                       class="w-full text-center font-black bg-transparent outline-none text-[13px]"
+                       class="w-full text-center font-black bg-transparent outline-none text-[14px]"
                        :class="getInputClass(shoe, size)" />
                 
                 <div v-else class="flex flex-col justify-center items-center w-full">
-                  <div class="text-[13px] font-black"
+                  <div class="text-[14px] font-black"
                        :class="{'text-black dark:text-white': shoe.sizes[size] > 0, 'text-red-600': shoe.sizes[size] < 0, 'text-[#5c7f59]': shoe.sizes[size] === 0 && shoe.history?.[size], 'text-gray-300': shoe.sizes[size] === 0 && !shoe.history?.[size]}">
                     {{ shoe.sizes[size] !== 0 || shoe.history?.[size] ? shoe.sizes[size] : (isB2BMode && shoe.hqStockData?.[size] ? '-' : '0') }}
                   </div>
                 </div>
               </div>
               
+              <!-- B2B 본사 재고 (비율에 맞춰 text-[12px] 로 확대) -->
               <div v-if="isB2BMode && shoe.hqStockData && shoe.hqStockData[size] !== undefined" 
-                   class="bg-gray-50 border-t border-gray-100 text-[10px] font-black text-center py-0.5" 
+                   class="bg-gray-50 border-t border-gray-100 text-[12px] font-black text-center py-1" 
                    :class="getHQStockTextColor(shoe.hqStockData[size])">
                 {{ shoe.hqStockData[size] }}
               </div>
