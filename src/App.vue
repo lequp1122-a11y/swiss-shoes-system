@@ -1,17 +1,6 @@
 <template>
-  <div v-if="!isAuthenticated" class="min-h-screen bg-gray-50 flex items-center justify-center p-4 font-pretendard transition-colors duration-500" :class="{ 'dark': isDark }">
-    <div class="bg-white p-8 sm:p-10 rounded-3xl shadow-2xl max-w-md w-full text-center border-2 border-gray-100 transition-colors">
-      <div class="w-20 h-20 bg-indigo-50 text-indigo-600 rounded-full flex items-center justify-center mx-auto mb-6 text-4xl shadow-inner">🔒</div>
-      <h1 class="text-3xl font-black text-gray-800 mb-2">시스템 잠금</h1>
-      <p class="text-gray-500 mb-8 font-bold">관리자 6자리 비밀번호를 입력해주세요.</p>
-      <input v-model="pinPassword" type="password" maxlength="6" @keyup.enter="handleLogin"
-             class="w-full text-center text-4xl tracking-[0.5em] font-black px-4 py-6 bg-gray-50 border-2 border-gray-200 rounded-2xl focus:border-indigo-500 focus:ring-4 focus:ring-indigo-100 outline-none mb-6 transition-all text-gray-900"
-             placeholder="******">
-      <button @click="handleLogin" class="w-full bg-indigo-600 text-white font-black text-xl py-5 rounded-2xl shadow-lg hover:bg-indigo-700 active:translate-y-1 transition-all">접속하기</button>
-    </div>
-  </div>
+  <div class="min-h-screen bg-gray-50 pb-10 font-pretendard transition-colors duration-500" :class="{ 'dark': isDark }">
 
-  <div v-else class="min-h-screen bg-gray-50 pb-10 font-pretendard transition-colors duration-500" :class="{ 'dark': isDark }">
     <header class="bg-white shadow-sm sticky top-0 z-30 transition-colors">
       <div class="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 py-4 flex flex-col lg:flex-row justify-between items-center gap-4">
         <div class="flex items-center gap-4">
@@ -638,10 +627,6 @@ const supabaseKey = import.meta.env.VITE_SUPABASE_KEY
 const supabase = createClient(supabaseUrl, supabaseKey)
 
 const HQ_API_TOKEN = import.meta.env.VITE_HQ_API_TOKEN;
-
-const isAuthenticated = ref(false)
-const pinPassword = ref('')
-const handleLogin = () => { if (pinPassword.value === '245824') isAuthenticated.value = true; else alert('비밀번호 불일치'); pinPassword.value = ''; }
 
 const isDark = ref(false)
 const toggleDarkMode = () => { isDark.value = !isDark.value; document.documentElement.classList.toggle('dark', isDark.value); }
