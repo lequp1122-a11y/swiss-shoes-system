@@ -663,16 +663,28 @@ const sortedAndFilteredInventory = computed(() => {
   })
 
   if (sortBySize.value) {
-    filtered.sort((a, b) => {
-      const stockA = a.sizes[sortBySize.value] || 0
-      const stockB = b.sizes[sortBySize.value] || 0
-      const hasStockA = stockA > 0 ? 1 : 0
-      const hasStockB = stockB > 0 ? 1 : 0
-      if (hasStockA !== hasStockB) return hasStockB - hasStockA
-      if (a.brand !== b.brand) return a.brand === 'Kybun' ? -1 : 1
-      return a.modelName.localeCompare(b.modelName)
-    })
-  }
+      // 기존 사이즈 정렬 로직 (이 부분은 건드리지 않습니다)
+      filtered.sort((a, b) => {
+        const stockA = a.sizes[sortBySize.value] || 0
+        const stockB = b.sizes[sortBySize.value] || 0
+        const hasStockA = stockA > 0 ? 1 : 0
+        const hasStockB = stockB > 0 ? 1 : 0
+        if (hasStockA !== hasStockB) return hasStockB - hasStockA
+        if (a.brand !== b.brand) return a.brand === 'Kybun' ? -1 : 1
+        return a.modelName.localeCompare(b.modelName)
+      })
+    } else {
+      // 💡 새로 추가할 부분: 사이즈 정렬이 없는 '기본 상태'일 때의 자동 정렬 로직
+      filtered.sort((a, b) => {
+        // 1. 브랜드가 다르면 'Kybun(기분)'을 무조건 위로 올립니다.
+        if (a.brand !== b.brand) {
+          return a.brand === 'Kybun' ? -1 : 1
+        }
+        // 2. 브랜드가 같다면(기분vs기분, 조야vs조야), 모델명을 가나다(알파벳) 순으로 정렬합니다.
+        return a.modelName.localeCompare(b.modelName)
+      })
+    }
+  
   return filtered
 })
 
