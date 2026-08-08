@@ -142,14 +142,18 @@
 
           <div>
             <div class="flex justify-between items-center mb-3">
-              <div class="flex items-center gap-2">
-                <h2 class="text-sm font-bold text-gray-700">
-                  📝 입출고 내역 
-                </h2>
-                <button @click="resetLogView" class="action-btn text-gray-500 hover:text-indigo-600 bg-white border border-gray-200 hover:bg-gray-50 w-7 h-7 rounded-lg flex justify-center items-center transition-all shadow-sm active:scale-95 text-xs font-bold" title="필터 및 선택 초기화">
-                  🔄
-                </button>
-              </div>
+<div class="flex flex-wrap items-center gap-2">
+  <h2 class="text-sm font-bold text-gray-700">📝 입출고 내역</h2>
+  
+<!-- 월 필터 UI -->
+  <div class="flex items-center gap-1 bg-gray-50 border border-gray-200 rounded-lg px-2 py-1 shadow-inner">
+    <input type="month" v-model="filterMonth" class="bg-transparent text-xs font-bold outline-none text-gray-600 cursor-pointer">
+  </div>
+
+  <button @click="resetLogView" class="action-btn text-gray-500 hover:text-indigo-600 bg-white border border-gray-200 hover:bg-gray-50 w-7 h-7 rounded-lg flex justify-center items-center transition-all shadow-sm active:scale-95 text-xs font-bold" title="필터 및 선택 초기화">
+    🔄
+  </button>
+</div>
 
               <div class="flex gap-2 items-center">
                 <button @click="deleteSelectedLog" 
@@ -167,15 +171,7 @@
               <table class="w-full lg:min-w-[700px] text-center text-[11px] xs:text-xs sm:text-[18px] lg:text-[19px] whitespace-nowrap border-separate" style="border-spacing: 0 4px;">
                 <thead class="text-gray-400">
                   <tr>
-                    <th class="font-bold pb-1.5 text-left pl-1 sm:pl-6">
-                      <div class="flex items-center gap-1">
-                        <span>날짜</span>
-                        <div class="relative w-4 h-4 sm:w-5 sm:h-5 cursor-pointer text-gray-400 hover:text-indigo-500 transition-colors" title="날짜로 검색">
-                          📅
-                          <input type="date" v-model="filterDate" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer" />
-                        </div>
-                      </div>
-                    </th>
+                  <th class="font-bold pb-1.5 text-left pl-1 sm:pl-6">날짜</th>
                     <th class="font-bold pb-1.5">구분</th>
                     <th class="font-bold pb-1.5">브랜드</th>
                     <th class="font-bold pb-1.5 text-left pl-1">상품명</th>
@@ -221,7 +217,44 @@
                 </TransitionGroup>
               </table>
             </div>
-          </div>
+<!-- ✅ 여기에 새로운 번호형 페이지네이션을 넣습니다! ✅ -->
+            <div v-if="totalPages > 1" class="flex justify-center items-center gap-1 sm:gap-2 mt-4 mb-2 pb-4">
+              
+              <!-- 맨 앞으로 -->
+              <button @click="currentPage = 1" :disabled="currentPage === 1" 
+                      class="w-8 h-8 flex items-center justify-center rounded-lg border border-gray-200 text-gray-400 hover:bg-gray-100 disabled:opacity-30 transition-all font-bold">
+                «
+              </button>
+              
+              <!-- 이전 페이지 -->
+              <button @click="currentPage--" :disabled="currentPage === 1" 
+                      class="w-8 h-8 flex items-center justify-center rounded-lg border border-gray-200 text-gray-400 hover:bg-gray-100 disabled:opacity-30 transition-all font-bold">
+                ‹
+              </button>
+
+              <!-- 페이지 번호 (1 2 3 4 5) -->
+              <button v-for="page in visiblePages" :key="page" 
+                      @click="currentPage = page"
+                      class="w-8 h-8 sm:w-10 sm:h-10 flex items-center justify-center rounded-lg font-black text-sm transition-all"
+                      :class="currentPage === page ? 'bg-indigo-600 text-white shadow-md scale-105' : 'bg-white border border-gray-200 text-gray-600 hover:bg-indigo-50'">
+                {{ page }}
+              </button>
+
+              <!-- 다음 페이지 -->
+              <button @click="currentPage++" :disabled="currentPage === totalPages" 
+                      class="w-8 h-8 flex items-center justify-center rounded-lg border border-gray-200 text-gray-400 hover:bg-gray-100 disabled:opacity-30 transition-all font-bold">
+                ›
+              </button>
+
+              <!-- 맨 뒤로 -->
+              <button @click="currentPage = totalPages" :disabled="currentPage === totalPages" 
+                      class="w-8 h-8 flex items-center justify-center rounded-lg border border-gray-200 text-gray-400 hover:bg-gray-100 disabled:opacity-30 transition-all font-bold">
+                »
+              </button>
+            </div>
+            <!-- ✅ 페이지네이션 끝 ✅ -->
+
+          </div> <!-- 입출고 내역 감싸는 div 닫는 태그 -->
         </div>
 
 <div v-if="currentTab === 'status'" class="space-y-4">
@@ -467,6 +500,7 @@
               </tbody>
             </table>
           </div>
+
         </div>
 
         <div class="bg-white p-6 sm:p-8 rounded-3xl border-2 border-gray-100 shadow-sm transition-colors relative">
@@ -616,7 +650,7 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted, onUnmounted } from 'vue'
+import { ref, computed, onMounted, onUnmounted, watch } from 'vue'
 import { createClient } from '@supabase/supabase-js'
 
 // ==========================================
@@ -699,24 +733,60 @@ const selectSize = (size) => {
 // 🚀 Supabase 데이터 연동
 // ==========================================
 const transactionLogs = ref([])
-const uiLogs = ref([]) // 🔥 화면 하단 표 전용으로 쓸 순수 입출고 내역 분리!
 
 const isFetchingLogs = ref(false)
-const filterDate = ref('');
+const filterMonth = ref(''); // YYYY-MM
+const currentPage = ref(1);
+const itemsPerPage = 50;     // 한 페이지에 보여줄 개수
 const selectedLogId = ref(null);
 
 const resetLogView = () => {
-  filterDate.value = '';
+  filterMonth.value = '';
+  currentPage.value = 1;
   selectedLogId.value = null;
 };
 
-const displayTransactionLogs = computed(() => {
-  // 🔥 화면 표시용 배열(uiLogs)을 쓰기 때문에 재고조정 필터를 안 거쳐도 완벽하게 예전 기록이 나타납니다.
-  let logs = uiLogs.value;
-  if (filterDate.value) {
-    return logs.filter(log => log.date && log.date.startsWith(filterDate.value));
+// 전체 데이터에서 입/출고/양도만 필터링 + 월 검색 적용
+const filteredPureLogs = computed(() => {
+  let logs = transactionLogs.value.filter(l => ['출고', '입고', '양도'].includes(l.type));
+  
+  if (filterMonth.value) {
+    logs = logs.filter(l => l.date && l.date.startsWith(filterMonth.value));
   }
-  return logs; 
+  return logs;
+});
+
+// 전체 페이지 수 계산
+const totalPages = computed(() => Math.ceil(filteredPureLogs.value.length / itemsPerPage) || 1);
+
+// 👇👇👇 화면에 표시할 페이지 번호 5개 계산 👇👇👇
+const visiblePages = computed(() => {
+  const pages = [];
+  const maxVisible = 5; 
+  let start = Math.max(1, currentPage.value - 2);
+  let end = start + maxVisible - 1;
+  
+  if (end > totalPages.value) {
+    end = totalPages.value;
+    start = Math.max(1, end - maxVisible + 1);
+  }
+  
+  for (let i = start; i <= end; i++) {
+    pages.push(i);
+  }
+  return pages;
+});
+
+// 현재 페이지에 맞는 50개만 잘라서 화면에 전달 (페이지네이션)
+const displayTransactionLogs = computed(() => {
+  const start = (currentPage.value - 1) * itemsPerPage;
+  const end = start + itemsPerPage;
+  return filteredPureLogs.value.slice(start, end);
+});
+
+// 필터 조건(월)이 바뀌면 무조건 1페이지로 리셋
+watch(filterMonth, () => {
+  currentPage.value = 1;
 });
 
 const handleOutsideClick = (e) => {
@@ -736,7 +806,6 @@ const deleteSelectedLog = async () => {
   const { error } = await supabase.from('logs').delete().eq('id', selectedLogId.value);
   if (!error) { 
     transactionLogs.value = transactionLogs.value.filter(l => l.id !== selectedLogId.value);
-    uiLogs.value = uiLogs.value.filter(l => l.id !== selectedLogId.value);
     calculateInventory(); 
     selectedLogId.value = null;
   } else {
@@ -745,7 +814,7 @@ const deleteSelectedLog = async () => {
 };
 
 const fetchTransactionLogs = async () => {
-  isFetchingLogs.value = true
+  isFetchingLogs.value = true;
   
   // 1. 모델 연동
   let { data: modelsData, error: modelsError } = await supabase.from('models').select('*')
@@ -766,7 +835,7 @@ const fetchTransactionLogs = async () => {
     }))
   }
 
-  // 2. 🔥 재고 계산을 위한 '모든 로그' 끝까지 다 가져오기 (데이터 잘림 방지)
+// 2. 🔥 재고 계산을 위한 '모든 로그' 끝까지 다 가져오기
   let allLogs = []
   let from = 0
   const step = 1000
@@ -787,17 +856,6 @@ const fetchTransactionLogs = async () => {
   if (allLogs.length > 0) {
     transactionLogs.value = allLogs
     calculateInventory() 
-  }
-
-  // 3. 화면 하단 표시용 '순수 입출고' 기록만 별도로 50개 콕 집어오기!
-  const { data: pureLogs } = await supabase.from('logs')
-    .select('*')
-    .in('type', ['출고', '입고', '양도'])
-    .order('id', { ascending: false })
-    .limit(50)
-  
-  if (pureLogs) {
-    uiLogs.value = pureLogs
   }
 
   isFetchingLogs.value = false
@@ -853,23 +911,13 @@ onMounted(() => {
     if (payload.eventType === 'INSERT') {
       const exists = transactionLogs.value.find(l => l.id === payload.new.id)
       if (!exists) transactionLogs.value.unshift(payload.new)
-      
-      // 🔥 '출고, 입고, 양도'일 경우 화면용 배열에도 즉시 추가
-      if (['출고', '입고', '양도'].includes(payload.new.type)) {
-        const uiExists = uiLogs.value.find(l => l.id === payload.new.id)
-        if (!uiExists) uiLogs.value.unshift(payload.new)
-      }
     } 
     else if (payload.eventType === 'UPDATE') {
       const index = transactionLogs.value.findIndex(l => l.id === payload.new.id)
       if (index !== -1) transactionLogs.value[index] = payload.new
-      
-      const uiIndex = uiLogs.value.findIndex(l => l.id === payload.new.id)
-      if (uiIndex !== -1) uiLogs.value[uiIndex] = payload.new
     } 
     else if (payload.eventType === 'DELETE') {
       transactionLogs.value = transactionLogs.value.filter(l => l.id !== payload.old.id)
-      uiLogs.value = uiLogs.value.filter(l => l.id !== payload.old.id)
     }
     calculateInventory()
   }).subscribe()
@@ -931,17 +979,12 @@ const submitLog = async () => {
     const exists = transactionLogs.value.find(l => l.id === data[0].id)
     if(!exists) transactionLogs.value.unshift(data[0]) 
     
-    // 🔥 새 등록건이 화면에도 바로 뜨도록 처리
-    const uiExists = uiLogs.value.find(l => l.id === data[0].id)
-    if(!uiExists) uiLogs.value.unshift(data[0])
-
     calculateInventory() 
     logForm.value.quantity = 1 
   } else {
     alert('저장 실패: ' + (error?.message || '알 수 없는 오류'))
   }
 }
-
 // 🔥 다이렉트 재고 수정 (엑셀 복사/붙여넣기 및 충돌 방지 자물쇠)
 const isEditMode = ref(false)
 const isSavingEdit = ref(false) 
