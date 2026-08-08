@@ -141,19 +141,19 @@
           </div>
 
           <div>
-            <div class="flex justify-between items-center mb-3">
-<div class="flex flex-wrap items-center gap-2">
-  <h2 class="text-sm font-bold text-gray-700">📝 입출고 내역</h2>
-  
-<!-- 월 필터 UI -->
-  <div class="flex items-center gap-1 bg-gray-50 border border-gray-200 rounded-lg px-2 py-1 shadow-inner">
-    <input type="month" v-model="filterMonth" class="bg-transparent text-xs font-bold outline-none text-gray-600 cursor-pointer">
-  </div>
+<div class="flex justify-between items-center mb-3">
+  <div class="flex flex-wrap items-center gap-2">
+    <h2 class="text-sm font-bold text-gray-700">📝 입출고 내역</h2>
+    
+    <!-- 월 필터 UI (모바일에서는 숨김 처리) -->
+    <div class="hidden sm:flex items-center gap-1 bg-gray-50 border border-gray-200 rounded-lg px-2 py-1 shadow-inner">
+      <input type="month" v-model="filterMonth" class="bg-transparent text-xs font-bold outline-none text-gray-600 cursor-pointer">
+    </div>
 
-  <button @click="resetLogView" class="action-btn text-gray-500 hover:text-indigo-600 bg-white border border-gray-200 hover:bg-gray-50 w-7 h-7 rounded-lg flex justify-center items-center transition-all shadow-sm active:scale-95 text-xs font-bold" title="필터 및 선택 초기화">
-    🔄
-  </button>
-</div>
+    <button @click="resetLogView" class="action-btn text-gray-500 hover:text-indigo-600 bg-white border border-gray-200 hover:bg-gray-50 w-7 h-7 rounded-lg flex justify-center items-center transition-all shadow-sm active:scale-95 text-xs font-bold" title="필터 및 선택 초기화">
+      🔄
+    </button>
+  </div>
 
               <div class="flex gap-2 items-center">
                 <button @click="deleteSelectedLog" 
