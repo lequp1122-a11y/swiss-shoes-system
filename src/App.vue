@@ -145,11 +145,16 @@
   <div class="flex flex-wrap items-center gap-2">
     <h2 class="text-sm font-bold text-gray-700">📝 입출고 내역</h2>
     
-    <!-- 월 필터 UI (모바일에서는 숨김 처리) -->
-    <div class="hidden sm:flex items-center gap-1 bg-gray-50 border border-gray-200 rounded-lg px-2 py-1 shadow-inner">
-      <input type="month" v-model="filterMonth" class="bg-transparent text-xs font-bold outline-none text-gray-600 cursor-pointer">
+<!-- 월 필터 UI (모바일에서는 숨김 처리) -->
+    <div class="hidden sm:flex items-center gap-1 bg-green-50 border border-green-200 rounded-lg px-2 py-1 shadow-inner transition-colors hover:bg-green-100 cursor-pointer">
+      <input type="month" 
+             v-model="filterMonth" 
+             min="2024-02" 
+             :max="maxMonth"
+             @click="$event.target.showPicker && $event.target.showPicker()"
+             class="bg-transparent text-xs font-black outline-none text-green-700 cursor-pointer w-full h-full">
     </div>
-
+    
     <button @click="resetLogView" class="action-btn text-gray-500 hover:text-indigo-600 bg-white border border-gray-200 hover:bg-gray-50 w-7 h-7 rounded-lg flex justify-center items-center transition-all shadow-sm active:scale-95 text-xs font-bold" title="필터 및 선택 초기화">
       🔄
     </button>
@@ -736,6 +741,10 @@ const transactionLogs = ref([])
 
 const isFetchingLogs = ref(false)
 const filterMonth = ref(''); // YYYY-MM
+const maxMonth = computed(() => {
+  const d = new Date();
+  return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}`;
+});
 const currentPage = ref(1);
 const itemsPerPage = 50;     // 한 페이지에 보여줄 개수
 const selectedLogId = ref(null);
